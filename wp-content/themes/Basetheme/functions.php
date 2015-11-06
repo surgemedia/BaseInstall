@@ -19,7 +19,13 @@ $sage_includes = [
   'lib/titles.php',                // Page titles
   'lib/extras.php',                // Custom functions
   'lib/nav-walker.php',            // Navigation compatible with bootstrap & Sage
-
+  'lib/function-debug.php',                // Custom functions
+  'lib/aq_resizer.php',                // Custom functions
+  'lib/function-get-featured-image-url.php',                // Custom functions
+  'lib/function-hex2rgba.php',                // Custom functions
+  'post_types/action-post-type-case-study.php',                // Custom Post Type
+  'post_types/action-post-type-work.php',               // Custom Post Type
+  'post_types/register-taxonomies.php',               // Custom Post Type
 ];
 
 foreach ($sage_includes as $file) {

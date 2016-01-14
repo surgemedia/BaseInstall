@@ -27,13 +27,13 @@ if (file_exists(dirname(__FILE__) . '/local-config.php')) {
 
 // Global DB config
 if (!defined('DB_NAME')) {
-	define('DB_NAME', 'basetheme');
+	define('DB_NAME', ' ENTER YOUR OWN');
 }
 if (!defined('DB_USER')) {
-	define('DB_USER', 'basetheme');
+	define('DB_USER', 'ENTER YOUR OWN');
 }
 if (!defined('DB_PASSWORD')) {
-	define('DB_PASSWORD', 'basetheme');
+	define('DB_PASSWORD', 'ENTER YOUR OWN');
 }
 if (!defined('DB_HOST')) {
 	define('DB_HOST', 'localhost');
@@ -58,15 +58,15 @@ if (!defined('DB_COLLATE')) {
  *
  * @since 2.6.0
  */
-define('AUTH_KEY',         '@FrFv<j}m}t%[vuh)JRM2<ao-.C^%5y@0(@|VeF-)$Lw=j35JY]b77NT9Y;9qP[d');
-define('SECURE_AUTH_KEY',  'O@$ [-+W0a6%URfo1SFy5+B9<YJM~6cqL-9-45myvcNF1)+Dh+c[hPC>fth:YX:-');
-define('LOGGED_IN_KEY',    ';JLb|JjBfKc`hfiN`YH[.AbbJ@S|<~d#Tq6*v3Ie|B>%)L1nlZeT!K(31hO0#-NR');
-define('NONCE_KEY',        ';j?$|yW5/TK{8W?BROqo*4x4;5kCXNK+H^Y[dMqjc`tlZkcH=%X!s/e3vb)naK;/');
-define('AUTH_SALT',        '.st.].GN1S=PRe)+|m Q!73E`bO/QLs3uQPM%hIi%fy(=%zX<{|-wnK8zyBBn?`^');
-define('SECURE_AUTH_SALT', 'F6LqSNu4*S/c-VR,`?WMyr$,s {N{n[KE,fAP_b 2{~@G`sZkZ]GU>D,[_YX3qJr');
-define('LOGGED_IN_SALT',   '{]OI(Y)M};6Zo9}DwPY8zd&<KrTB>F|M9:183Xj$3yBS,B5:$l-l3hsP8h$qH$j]');
-define('NONCE_SALT',       'CVo0q}Feg/K2GA756iQw*-d*0)=nAGEang<t=[0/,6on{uMf,H(Kt.Q8v+iX75F#');
-
+define('AUTH_KEY',         'GENEARTE SALT FROM ABOVE ^');
+define('SECURE_AUTH_KEY',  'GENEARTE SALT HERE');
+define('LOGGED_IN_KEY',    'GENEARTE SALT HERE');
+define('NONCE_KEY',        'GENEARTE SALT HERE');
+define('AUTH_SALT',        'GENEARTE SALT HERE');
+define('SECURE_AUTH_SALT', 'GENEARTE SALT HERE');
+define('LOGGED_IN_SALT',   'GENEARTE SALT HERE');
+define('NONCE_SALT',       'GENEARTE SALT HERE');
+define( ‘DISALLOW_FILE_EDIT’, true );
 /**#@-*/
 
 /**
@@ -75,8 +75,10 @@ define('NONCE_SALT',       'CVo0q}Feg/K2GA756iQw*-d*0)=nAGEang<t=[0/,6on{uMf,H(K
  * You can have multiple installations in one database if you give each a unique
  * prefix. Only numbers, letters, and underscores please!
  */
-$table_prefix  = 'wp_';
-
+$table_prefix  = '98vEfJsQK2_'; // <-- GENERATE A RANDOM PREFIX
+/**#@+
+* {@link http://passwordsgenerator.net/ WordPress.org secret-key service}
+*/
 /**
  * WordPress Localized Language, defaults to English.
  *
@@ -99,7 +101,6 @@ define('WPLANG', '');
 if (!defined('WP_DEBUG')) {
 	define('WP_DEBUG', false);
 	define( 'SCRIPT_DEBUG', true );
-
 }
 
 /* That's all, stop editing! Happy blogging. */

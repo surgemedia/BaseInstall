@@ -16,6 +16,30 @@
                 "id": ""
             },
             "default_value": "#88B127"
+        },
+        {
+            "key": "field_5668cac36ac68",
+            "label": "Background",
+            "name": "background",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "url",
+            "preview_size": "thumbnail",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
         }
     ],
     "location": [
@@ -35,5 +59,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1446707706
+    "modified": 1449712443
 }

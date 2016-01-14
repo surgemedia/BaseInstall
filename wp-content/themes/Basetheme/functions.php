@@ -18,6 +18,7 @@ $sage_includes = [
   'lib/assets.php',                // Scripts and stylesheets
   'lib/titles.php',                // Page titles
   'lib/extras.php',                // Custom functions
+  'lib/add-menu-locations.php',    // Add Menu Location
   'lib/nav-walker.php',            // Navigation compatible with bootstrap & Sage
   'lib/function-debug.php',                // Custom functions
   'lib/aq_resizer.php',                // Custom functions
@@ -26,6 +27,7 @@ $sage_includes = [
   'post_types/action-post-type-case-study.php',                // Custom Post Type
   'post_types/action-post-type-work.php',               // Custom Post Type
   'post_types/register-taxonomies.php',               // Custom Post Type
+
 ];
 
 foreach ($sage_includes as $file) {

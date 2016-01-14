@@ -1,0 +1,66 @@
+#navtag {
+	background:$yellow;
+	position:fixed;
+	z-index:9999;
+	width: 74px;
+    overflow: hidden;
+    height: 68px;
+    transition: 0.3s ease all;
+	.menu-main-menu-container {
+    display: inline-block;
+    margin: 0px;
+    padding: 0px;
+    float:left;
+
+	}
+	.brand {
+		display:inline-block;
+		float:left;
+		i {
+			color:#fff;
+			height:100%;
+			font-size:2em;
+			padding:0.5em 1em;
+			display:inline-block;
+			text-align:center;
+			background:$teal;
+			
+		}
+	}
+	
+		.navbar {
+		
+		display: inline-block;
+	    background: 0 0;
+	    border: 0;
+	    color: #fff;
+	    margin: 0px;
+	    padding: 0px;
+	    width: auto;
+	    float:right;
+	    background:none;
+	    #primary-navigation {
+	    	padding:0px;
+			
+		    a {
+		    	color:$teal-dark;
+		    	font-family: $primary-font;
+					    	    border-right:1px solid rgba($yellow-dark,0.1);
+				    text-transform: uppercase;
+				    padding: 1.5em 1em 1.55em 1em;
+				    line-height: 1.8em;
+				    height: 100%;
+					transition: 0.3s ease all;
+				
+		    }
+		    li:last-child a{
+					border-right:0px solid $yellow-dark;
+				}
+		}
+	}
+	&:hover {
+		width:360px;
+		transition: 0.3s ease all;
+	}
+}
+

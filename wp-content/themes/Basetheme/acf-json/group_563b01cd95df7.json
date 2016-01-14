@@ -9,14 +9,7 @@
             "type": "gallery",
             "instructions": "",
             "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "",
-                        "operator": "=="
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -24,7 +17,7 @@
             },
             "min": "",
             "max": "",
-            "preview_size": "thumbnail",
+            "preview_size": "full",
             "library": "all",
             "min_width": "",
             "min_height": "",
@@ -57,5 +50,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1446707963
+    "modified": 1449718123
 }

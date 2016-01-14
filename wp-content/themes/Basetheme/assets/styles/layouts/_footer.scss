@@ -1,0 +1,66 @@
+#footer{
+	
+	.copyRight{
+		// margin-top:0.1em; 
+		.title{
+			font-size: 24px;
+		}
+	}
+
+	.signUp{
+		text-align: center;
+		.gform_heading{
+			margin-top: .25em;
+			h3{
+    			margin: 0;
+			}
+		}
+		.gform_body{
+			margin-left:10%; 
+			width:60%;
+			float:left;
+			.ginput_container input{
+				width:100%;
+				height:3em;
+				padding-left:1em;
+			}
+			ul{
+				padding:0;
+				width:100%
+			}
+		}
+		.gform_footer{
+			width:20%;
+			float:left;
+			padding-top: 1.45em;
+			input[type="submit"]{
+				width: 100%;
+				height: 3em;
+				background: $yellow;
+				border:0;
+				color:$teal-dark;
+			}
+		}
+	}
+	.followUs{
+		text-align: center;
+		.title{
+			font-size: 24px;
+		}
+		ul{
+			padding:0;
+			margin-top:1em;
+			li{
+				display: inline-block;
+				font-size:2em;
+				padding-right:10%;
+				i{
+					color:#fff;
+				}
+			}
+			li:last-child{
+				padding-right:0;
+			}
+		}
+	}
+}

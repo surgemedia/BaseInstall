@@ -134,20 +134,25 @@ var jsTasks = function(filename) {
       return gulpif(enabled.maps, sourcemaps.init());
     })
     .pipe(concat, filename)
-    .pipe(uglify, {
-      compress: {
-        'drop_debugger': enabled.stripJSDebug
-      }
-    })
+  
     .pipe(function() {
       return gulpif(enabled.rev, rev());
-    })
-    .pipe(function() {
-      return gulpif(enabled.maps, sourcemaps.write('.', {
-        sourceRoot: 'assets/scripts/'
-      }));
     })();
 };
+
+//after concat
+//   .pipe(uglify, {
+//      compress: {
+ //       'drop_debugger': enabled.stripJSDebug
+//      }
+//    })
+
+// return gulpif(enabled.rev, rev());
+//.pipe(function() {
+//      return gulpif(enabled.maps, sourcemaps.write('.', {
+//        sourceRoot: 'assets/scripts/'
+//      }));
+ //   })();
 
 // ### Write to rev manifest
 // If there are any revved files then write them to the rev manifest.

@@ -40,7 +40,6 @@
       }
     }
   };
-
   // The routing fires all common scripts, followed by the page specific scripts.
   // Add additional events for more control over timing e.g. a finalize event
   var UTIL = {
@@ -70,70 +69,7 @@
       UTIL.fire('common', 'finalize');
     } 
   };
-
   // Load Events
   $(document).ready(UTIL.loadEvents);
-/*================================
-=            Carousel            =
-================================*/
-$('.carousel').carousel({
-  interval: 5000,
-  pause: false
-})
-
-/*==========================================
-=            Youtube background            =
-==========================================*/
-$('#video-bg').YTPlayer({
-  videoId: $('#video-bg').data('video-id'),
-   playerVars: {
-    modestbranding: 0,
-    autoplay: 1,
-    controls: 0,
-    showinfo: 0,
-    wmode: 'transparent',
-    branding: 0,
-    rel: 0,
-    autohide: 0
-  },
-  callback: function() {
-    console.log($('#video-bg').data('video-id'));
-  }
-  });   
-
-  /*=============================================
-  = Enabling multi-level navigation =
-  ===============================================*/
-  $('ul.dropdown-menu [data-toggle=dropdown]').on('click', function(event) {
-      event.preventDefault(); 
-      event.stopPropagation(); 
-      $(this).parent().siblings().removeClass('open');
-      $(this).parent().toggleClass('open');
-  });
-
-  //   /*=================================
-  //   =            StickyNav            =
-  //   =================================*/
-
-  //   var stickyNavTop = $('#navtag').offset().top;
-    
-  //   // our function that decides weather the navigation bar should have "fixed" css position or not.
-  //   var stickyNav = function(){
-  //     var scrollTop = $(window).scrollTop(); // our current vertical position from the top
-           
-  //     // if we've scrolled more than the navigation, change its position to fixed to stick to top,
-  //     // otherwise change it back to relative
-  //     if (scrollTop > stickyNavTop) {
-  //           $('#navtag').addClass('sticky visible');
-  //     } else {
-  //           $('#navtag').removeClass('sticky visible');
-  //     }
-  // };
-
-  // stickyNav();
-  // // and run it again every time you scroll
-  // $(window).scroll(function() {
-  //   stickyNav();
-  // });
-
 })(jQuery); // Fully reference jQuery after this point.
+

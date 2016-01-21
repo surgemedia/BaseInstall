@@ -35,7 +35,39 @@ for ($i=0; $i < sizeof($featured_work); $i++) {
 	$case_study_url = get_permalink($case_study_obj->ID);
 }
 for ($j=0; $j < sizeof($case_study_home); $j++) {
-	include(locate_template('templates/work-obj.php'));
+		$args = array ( 
+		'post_type' => array( 'work' ),
+		'tax_query' => array(
+                                array(
+                                'taxonomy' => 'services',
+                                'field' => 'slug',
+                                'terms' => $work_home[$j],
+                                )
+                            ),
+		'post__in' => get_field('selected_work',$case_study_home[$j]),
+		'orderby' => 'post__in'
+		);
+			$case_query = new WP_Query( $args );
+			if ( $case_query->have_posts() ) {
+			while ( $case_query->have_posts() ) { 
+					$case_query->the_post();
+			// $client = wp_get_post_terms(get_the_id(), 'clients', array("fields" => "all"))[0];
+			// $url = getFeaturedUrl( get_the_id() );
+			// debug($work_home[$j]);
+			// debug($client->name);
+	 		includePart('templates/work-obj.php',
+	 			getFeaturedUrl( get_the_id() ),
+	 			hex2rgba( get_field('overlay_color') , 0.8),
+	 			wp_get_post_terms(get_the_id(), 'services', array("fields" => "all"))[0],
+	 			$case_study_url,
+	 			$work_home[$j],
+	 			wp_get_post_terms(get_the_id(), 'clients', array("fields" => "all"))[0]
+	 			);
+
+			} 
+		}
+	wp_reset_postdata();
+	
 }
 		 ?>
 	</div>

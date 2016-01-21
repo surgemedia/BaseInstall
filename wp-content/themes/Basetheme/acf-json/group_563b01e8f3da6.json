@@ -1,10 +1,10 @@
 {
     "key": "group_563b01e8f3da6",
-    "title": "Post Type - Work - General",
+    "title": "Post Type - Work - Molecule",
     "fields": [
         {
             "key": "field_563b01e9053d7",
-            "label": "overlay color",
+            "label": "Hover Overlay color",
             "name": "overlay_color",
             "type": "color_picker",
             "instructions": "pick the color of the square that is overlaid on hover",
@@ -16,30 +16,6 @@
                 "id": ""
             },
             "default_value": "#88B127"
-        },
-        {
-            "key": "field_5668cac36ac68",
-            "label": "Background",
-            "name": "background",
-            "type": "image",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "url",
-            "preview_size": "thumbnail",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": ""
         }
     ],
     "location": [
@@ -52,12 +28,14 @@
         ]
     ],
     "menu_order": 0,
-    "position": "normal",
+    "position": "side",
     "style": "default",
     "label_placement": "top",
     "instruction_placement": "label",
-    "hide_on_screen": "",
+    "hide_on_screen": [
+        "the_content"
+    ],
     "active": 1,
     "description": "",
-    "modified": 1449712443
+    "modified": 1452836543
 }

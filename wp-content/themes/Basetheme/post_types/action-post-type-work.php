@@ -23,7 +23,7 @@ function work_init() {
 		'label'               => __( 'Work', 'text_domain' ),
 		'description'         => __( 'Example of our work', 'text_domain' ),
 		'labels'              => $labels,
-		'supports'            => array( 'title', 'editor', 'thumbnail', 'revisions', ),
+		'supports'            => array( 'title', 'thumbnail', 'revisions', ),
 		'taxonomies'          => array( 'services', 'clients'  ),
 		'hierarchical'        => false,
 		'public'              => true,

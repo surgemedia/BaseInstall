@@ -1,7 +1,7 @@
 <footer id="footer" class="content-info" role="contentinfo">
   <div class="container">
   <div class="row">
-  	<div class="col-lg-12 text-center"><img src="" alt="Surge Media"></div>
+  	<div class="col-lg-12 text-center"><i class="surge-logo-symbol"></i></div>
     <div class="col-lg-3 copyRight">
     <span class="title"><?php echo date("Y"); ?> &copy; Surge Media</span>
     <ul>

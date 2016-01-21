@@ -152,6 +152,8 @@ class UpdraftPlus_BackupModule_openstack_base {
 			return true;
 
 		} catch (Exception $e) {
+			global $updraftplus;
+			$updraftplus->log("Error when sending manifest (".get_class($e)."): ".$e->getMessage());
 			return false;
 		}
 	}
@@ -194,7 +196,7 @@ class UpdraftPlus_BackupModule_openstack_base {
 	}
 
 
-	public function delete($files, $data = false) {
+	public function delete($files, $data = false, $sizeinfo = array()) {
 
 		global $updraftplus;
 		if (is_string($files)) $files = array($files);

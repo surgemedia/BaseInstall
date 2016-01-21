@@ -117,3 +117,54 @@
 	font-weight: normal;
 	font-style: normal;
 }
+
+@font-face {
+    font-family: 'surge';
+    src: url('../fonts/surge.eot');
+    src: url('../fonts/surge.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/surge.woff') format('woff'),
+         url('../fonts/surge.ttf') format('truetype'),
+         url('../fonts/surge.svg#surge') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+[class*='surge-logo-']:before{
+	display: inline-block;
+   font-family: 'surge';
+   font-style: normal;
+   font-weight: normal;
+   line-height: 1;
+   // -webkit-font-smoothing: subpixel-antialiased;
+   // -moz-osx-font-smoothing: grayscale
+}
+.surge-logo-stacked:before{content:'\0041';}
+.surge-logo-long:before{content:'\0042';}
+.surge-logo-symbol:before{content:'\0043';}
+.surge-logo-stacked-block:before{content:'\0044';}
+.surge-logo-long-block:before{content:'\0045';}
+
+@font-face {
+    font-family: 'Glyphter';
+    src: url('../fonts/Glyphter.eot');
+    src: url('../fonts/Glyphter.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Glyphter.woff') format('woff'),
+         url('../fonts/Glyphter.ttf') format('truetype'),
+         url('../fonts/Glyphter.svg#Glyphter') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+[class*='surge-icon-']:before{
+	display: inline-block;
+   font-family: 'Glyphter';
+   font-style: normal;
+   font-weight: normal;
+   line-height: 1;
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale
+}
+.surge-icon-mail:before{content:'\0041';}
+.surge-icon-phone:before{content:'\0042';}
+.surge-icon-quotation_mark_start:before{content:'\0043';}
+.surge-icon-quotation_mark_end:before{content:'\0044';}
+.surge-icon-map:before{content:'\0045';}
+.surge-icon-at:before{content:'\0046';}

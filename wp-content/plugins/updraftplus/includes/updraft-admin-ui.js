@@ -6,7 +6,35 @@ function updraft_delete(key, nonce, showremote) {
 	} else {
 		jQuery('#updraft-delete-remote-section, #updraft_delete_remote').hide().attr('disabled','disabled');
 	}
+	if (key.indexOf(',') > -1) {
+		jQuery('#updraft_delete_question_singular').hide();
+		jQuery('#updraft_delete_question_plural').show();
+	} else {
+		jQuery('#updraft_delete_question_plural').hide();
+		jQuery('#updraft_delete_question_singular').show();
+	}
 	jQuery('#updraft-delete-modal').dialog('open');
+}
+
+function updraft_deleteallselected() {
+	var howmany = 0;
+	var remote_exists = 0;
+	var key_all = '';
+	var nonce_all = '';
+	var remote_all = '';
+	jQuery('#updraft_existing_backups .updraft_existing_backups_row.backuprowselected').each(function(index) {
+		howmany++;
+		var nonce = jQuery(this).data('nonce');
+		if (nonce_all) { nonce_all += ','; }
+		nonce_all += nonce;
+		var key = jQuery(this).data('key');
+		if (key_all) { key_all += ','; }
+		key_all += key;
+		var has_remote = jQuery(this).find('.updraftplus-remove').data('hasremote');
+		if (remote_all) { remote_all += ','; }
+		remote_all += has_remote;
+	});
+	updraft_delete(key_all, nonce_all, remote_all);
 }
 
 function updraft_openrestorepanel(toggly) {
@@ -70,6 +98,20 @@ function updraft_restore_setoptions(entities) {
 	var height = 336+howmany*20;
 	jQuery('#updraft-restore-modal').dialog("option", "height", height);
 }
+
+function updraft_backup_dialog_open() {
+	jQuery('#backupnow_includefiles_moreoptions').hide();
+	if (updraft_settings_form_changed){
+		if (window.confirm(updraftlion.unsavedsettingsbackup)){
+			jQuery('#backupnow_label').val(''); 
+			jQuery('#updraft-backupnow-modal').dialog('open');
+		}
+	} else {
+		jQuery('#backupnow_label').val(''); 
+		jQuery('#updraft-backupnow-modal').dialog('open');
+	}
+}
+
 
 function updraft_migrate_dialog_open() {
 	jQuery('#updraft_migrate_modal_alt').hide();
@@ -378,6 +420,7 @@ function updraft_showlastbackup(){
 var updraft_historytimer = 0;
 var calculated_diskspace = 0;
 var updraft_historytimer_notbefore = 0;
+var updraft_history_lastchecksum = false;
 
 function updraft_historytimertoggle(forceon) {
 	if (!updraft_historytimer || forceon == 1) {
@@ -408,8 +451,10 @@ function updraft_updatehistory(rescan, remotescan) {
 	
 	if (rescan == 1) {
 		if (remotescan == 1) {
+			updraft_history_lastchecksum = false;
 			jQuery('#updraft_existing_backups').html('<p style="text-align:center;"><em>'+updraftlion.rescanningremote+'</em></p>');
 		} else {
+			updraft_history_lastchecksum = false;
 			jQuery('#updraft_existing_backups').html('<p style="text-align:center;"><em>'+updraftlion.rescanning+'</em></p>');
 		}
 	}
@@ -418,12 +463,58 @@ function updraft_updatehistory(rescan, remotescan) {
 			resp = jQuery.parseJSON(response);
 // 			if (resp.n != null) { jQuery('#updraft_showbackups').html(resp.n); }
 			if (resp.n != null) { jQuery('#updraft-navtab-backups').html(resp.n); }
-			if (resp.t != null) { jQuery('#updraft_existing_backups').html(resp.t); }
+			if (resp.t != null) {
+				if (resp.cksum != null) {
+					if (resp.cksum == updraft_history_lastchecksum) {
+						// Avoid unnecessarily refreshing the HTML if the data is the same. This helps avoid resetting the DOM (annoying when debugging), and keeps user row selections.
+						return;
+					}
+					updraft_history_lastchecksum = resp.cksum;
+				}
+				jQuery('#updraft_existing_backups').html(resp.t);
+			}
 		} catch(err) {
 			console.log(updraftlion.unexpectedresponse+' '+response);
 			console.log(err);
 		}
 	});
+}
+
+var updraft_interval_week_val = false;
+var updraft_interval_month_val = false;
+
+function updraft_intervals_monthly_or_not(selector_id, is_monthly, now_showing) {
+	var selector = '#'+selector_id;
+	var current_length = jQuery(selector+' option').length;
+	var existing_is_monthly = false;
+	if (current_length > 10) { existing_is_monthly = true; }
+	if (!is_monthly && !existing_is_monthly) {
+		return;
+	}
+	if (is_monthly && existing_is_monthly) {
+		if ('monthly' == now_showing) {
+			// existing_is_monthly does not mean the same as now_showing=='monthly'. existing_is_monthly refers to the drop-down, not whether the drop-down is being displayed. We may need to add these words back.
+			jQuery('.updraft_monthly_extra_words_'+selector_id).remove();
+			jQuery(selector).before('<span class="updraft_monthly_extra_words_'+selector_id+'">'+updraftlion.day+' </span>').after('<span class="updraft_monthly_extra_words_'+selector_id+'"> '+updraftlion.inthemonth+' </span>');
+		}
+		return;
+	}
+	jQuery('.updraft_monthly_extra_words_'+selector_id).remove();
+	if (is_monthly) {
+		// Save the old value
+		updraft_interval_week_val = jQuery(selector+' option:selected').val();
+		jQuery(selector).html(updraftlion.mdayselector).before('<span class="updraft_monthly_extra_words_'+selector_id+'">'+updraftlion.day+' </span>').after('<span class="updraft_monthly_extra_words_'+selector_id+'"> '+updraftlion.inthemonth+' </span>');
+		var select_mday = (updraft_interval_month_val === false) ? 1 : updraft_interval_month_val;
+		// Convert from day of the month (ordinal) to option index (starts at 0)
+		select_mday = select_mday - 1;
+		jQuery(selector+" option:eq("+select_mday+")").prop('selected', true);
+	} else {
+		// Save the old value
+		updraft_interval_month_val = jQuery(selector+' option:selected').val();
+		jQuery(selector).html(updraftlion.dayselector);
+		var select_day = (updraft_interval_week_val === false) ? 1 : updraft_interval_week_val;
+		jQuery(selector+" option:eq("+select_day+")").prop('selected', true);
+	}
 }
 
 function updraft_check_same_times() {
@@ -438,8 +529,14 @@ function updraft_check_same_times() {
 	}
 	
 	if ('weekly' == file_interval || 'fortnightly' == file_interval || 'monthly' == file_interval) {
+		if ('monthly' == file_interval) {
+			updraft_intervals_monthly_or_not('updraft_startday_files', true, file_interval);
+		} else {
+			updraft_intervals_monthly_or_not('updraft_startday_files', false, file_interval);
+		}
 		jQuery('#updraft_startday_files').show();
 	} else {
+		jQuery('.updraft_monthly_extra_words_updraft_startday_files').remove();
 		jQuery('#updraft_startday_files').hide();
 	}
 	
@@ -451,8 +548,14 @@ function updraft_check_same_times() {
 	}
 	
 	if ('weekly' == db_interval || 'fortnightly' == db_interval || 'monthly' == db_interval) {
+		if ('monthly' == db_interval) {
+			updraft_intervals_monthly_or_not('updraft_startday_db', true, db_interval);
+		} else {
+			updraft_intervals_monthly_or_not('updraft_startday_db', false, db_interval);
+		}
 		jQuery('#updraft_startday_db').show();
 	} else {
+		jQuery('.updraft_monthly_extra_words_updraft_startday_db').remove();
 		jQuery('#updraft_startday_db').hide();
 	}
 	
@@ -503,13 +606,19 @@ function updraftplus_diskspace_entity(key) {
 }
 
 function updraft_iframe_modal(getwhat, title) {
+	var width=780;
+	var height=500;
 	jQuery('#updraft-iframe-modal-innards').html('<iframe width="100%" height="430px" src="'+ajaxurl+'?action=updraft_ajax&subaction='+getwhat+'&nonce='+updraft_credentialtest_nonce+'"></iframe>');
-	jQuery('#updraft-iframe-modal').dialog('option', 'title', title).dialog('open');
+	jQuery('#updraft-iframe-modal').dialog('option', 'title', title).dialog('option', 'width', width).dialog('option', 'height', height).dialog('open');
 }
 
-function updraft_html_modal(showwhat, title) {
+function updraft_html_modal(showwhat, title, width, height) {
 	jQuery('#updraft-iframe-modal-innards').html(showwhat);
-	jQuery('#updraft-iframe-modal').dialog('option', 'title', title).dialog('open');
+	var updraft_html_modal_buttons = {};
+	if (width < 450) {
+		updraft_html_modal_buttons[updraftlion.close] = function() { jQuery(this).dialog("close"); };
+	}
+	jQuery('#updraft-iframe-modal').dialog('option', 'title', title).dialog('option', 'width', width).dialog('option', 'height', height).dialog('option', 'buttons', updraft_html_modal_buttons).dialog('open');
 }
 
 function updraftplus_diskspace() {
@@ -613,6 +722,8 @@ function updraft_restorer_checkstage2(doalert) {
 		timestamp: jQuery('#updraft_restore_timestamp').val(),
 		restoreopts: jQuery('#updraft_restore_form').serialize()
 	}, function(data) {
+		var info = null;
+		jQuery('#updraft_restorer_restore_options').val('');
 		try {
 			var resp = jQuery.parseJSON(data);
 			if (null == resp) {
@@ -628,7 +739,33 @@ function updraft_restorer_checkstage2(doalert) {
 			} else {
 				updraft_restore_stage = 3;
 			}
+			if (resp.hasOwnProperty('i')) {
+				// Store the information passed back from the backup scan
+				try {
+					info = jQuery.parseJSON(resp.i);
+// 					if (info.hasOwnProperty('multisite') && info.multisite && info.hasOwnProperty('same_url') && info.same_url) {
+					if (info.hasOwnProperty('addui')) {
+						console.log("Further UI options are being displayed");
+						var addui = info.addui;
+						report += '<div id="updraft_restoreoptions_ui" style="clear:left; padding-top:10px;">'+addui+'</div>';
+						if (typeof JSON == 'object' && typeof JSON.stringify == 'function') {
+							// If possible, remove from the stored info, to prevent passing back potentially large amounts of unwanted data
+							delete info.addui;
+							resp.i = JSON.stringify(info);
+						}
+					}
+				} catch(err) {
+					console.log(err);
+					console.log(resp);
+				}
+				jQuery('#updraft_restorer_backup_info').val(resp.i);
+			} else {
+				jQuery('#updraft_restorer_backup_info').val();
+			}
 			jQuery('#updraft-restore-modal-stage2a').html(report);
+			if (jQuery('#updraft-restore-modal-stage2a .updraft_select2').length > 0) {
+				jQuery('#updraft-restore-modal-stage2a .updraft_select2').select2();
+			}
 		} catch(err) {
 			console.log(data);
 			console.log(err);
@@ -723,7 +860,7 @@ function updraft_downloader_status_update(base, nonce, what, findex, resp, respo
 	return cancel_repeat;
 }
 
-function updraft_backupnow_go(backupnow_nodb, backupnow_nofiles, backupnow_nocloud, onlythisfileentity, extradata, label) {
+function updraft_backupnow_go(backupnow_nodb, backupnow_nofiles, backupnow_nocloud, onlythesefileentities, extradata, label) {
 
 	jQuery('#updraft_backup_started').html('<em>'+updraftlion.requeststart+'</em>').slideDown('');
 	setTimeout(function() {jQuery('#updraft_backup_started').fadeOut('slow');}, 75000);
@@ -739,8 +876,9 @@ function updraft_backupnow_go(backupnow_nodb, backupnow_nofiles, backupnow_noclo
 		extradata: extradata
 	};
 	
-	if ('' != onlythisfileentity) {
-		params.onlythisfileentity = onlythisfileentity;
+	
+	if ('' != onlythesefileentities) {
+		params.onlythisfileentity = onlythesefileentities;
 	}
 	
 	jQuery.post(ajaxurl, params, function(response) {
@@ -761,8 +899,191 @@ function updraft_backupnow_go(backupnow_nodb, backupnow_nofiles, backupnow_noclo
 }
 
 jQuery(document).ready(function($){
+	
+	// https://github.com/select2/select2/issues/1246#issuecomment-71710835
+	if (jQuery.ui && jQuery.ui.dialog && jQuery.ui.dialog.prototype._allowInteraction) {
+		var ui_dialog_interaction = jQuery.ui.dialog.prototype._allowInteraction;
+		jQuery.ui.dialog.prototype._allowInteraction = function(e) {
+			if ($(e.target).closest('.select2-dropdown').length) return true;
+					   return ui_dialog_interaction.apply(this, arguments);
+		};
+	}
 
-	jQuery("#updraft-navtab-settings-content form input, #updraft-navtab-settings-content form select").change(function(e){
+	jQuery('#updraft-navtab-backups-content').on('click', '#updraft_existing_backups .updraft_existing_backups_row', function(e) {
+		if (! e.ctrlKey && ! e.metaKey) return;
+		jQuery(this).toggleClass('backuprowselected');
+		if (jQuery('#updraft_existing_backups .updraft_existing_backups_row.backuprowselected').length >0) {
+			jQuery('#ud_massactions').show();
+		} else {
+			jQuery('#ud_massactions').hide();
+		}
+	});
+	
+	jQuery('#backupnow_includefiles_showmoreoptions').click(function(e) {
+		e.preventDefault();
+		jQuery('#backupnow_includefiles_moreoptions').toggle();
+	});
+	
+	// Remote Control
+	jQuery('#updraftplus_remotecontrol_keycreate_go').click(function(e) {
+		e.preventDefault();
+		jQuery('#updraftplus_remotecontrol_key').html(updraftlion.creating);
+		try {
+			jQuery.post(ajaxurl,  {
+				action: 'updraft_ajax',
+				subaction: 'remotecontrol_createkey',
+				nonce: updraft_credentialtest_nonce
+			}, function(response) {
+				jQuery('#updraftplus_remotecontrol_key').html();
+				try {
+					resp = jQuery.parseJSON(response);
+					alert(resp.r);
+					console.log(resp.bundle);
+					if (resp.hasOwnProperty('bundle')) {
+						jQuery('#updraftplus_remotecontrol_key').html('<textarea onclick="this.select();" style="width:625px; height:235px; word-wrap:break-word; border: 1px solid #aaa; border-radius: 3px; padding:4px;">'+resp.bundle+'</textarea>');
+					}
+				} catch (err) {
+					alert(updraftlion.unexpectedresponse+' '+response);
+					console.log(err);
+				} 
+			});
+		} catch (err) {
+			jQuery('#updraftplus_remotecontrol_key').html();
+			console.log(err);
+		}
+	});
+	
+	// UpdraftPlus Vault
+	
+	jQuery('#updraftvault_settings_cell').on('click', '.updraftvault_backtostart', function(e) {
+		e.preventDefault();
+		jQuery('#updraftvault_settings_showoptions').slideUp();
+		jQuery('#updraftvault_settings_connect').slideUp();
+		jQuery('#updraftvault_settings_connected').slideUp();
+		jQuery('#updraftvault_settings_default').slideDown();
+	});
+	
+	// Prevent default event when pressing return in the form
+	jQuery('#updraftvault_settings_connect input').keypress(function(e) {
+		if (e.which == 13) {
+			jQuery('#updraftvault_connect_go').click();
+			return false;
+		}
+	});
+	
+	jQuery('#updraftvault_settings_cell').on('click', '#updraftvault_recountquota', function(e) {
+		e.preventDefault();
+		jQuery('#updraftvault_recountquota').html(updraftlion.counting);
+		try {
+			jQuery.post(ajaxurl,  {
+				action: 'updraft_ajax',
+				subaction: 'vault_recountquota',
+				nonce: updraft_credentialtest_nonce
+			}, function(response) {
+				jQuery('#updraftvault_recountquota').html(updraftlion.updatequotacount);
+				try {
+					resp = jQuery.parseJSON(response);
+					if (resp.hasOwnProperty('html')) {
+						jQuery('#updraftvault_settings_connected').html(resp.html);
+						if (resp.hasOwnProperty('connected')) {
+							if (resp.connected) {
+								jQuery('#updraftvault_settings_default').hide();
+								jQuery('#updraftvault_settings_connected').show();
+							} else {
+								jQuery('#updraftvault_settings_connected').hide();
+								jQuery('#updraftvault_settings_default').show();
+							}
+						}
+					}
+				} catch (err) {
+					alert(updraftlion.unexpectedresponse+' '+response);
+					console.log(err);
+				} 
+			});
+		} catch (err) {
+			jQuery('#updraftvault_recountquota').html(updraftlion.updatequotacount);
+			console.log(err);
+		}
+	});
+	
+	jQuery('#updraftvault_settings_cell').on('click', '#updraftvault_disconnect', function(e) {
+		e.preventDefault();
+		jQuery('#updraftvault_disconnect').html(updraftlion.disconnecting);
+		try {
+			jQuery.post(ajaxurl,  {
+				action: 'updraft_ajax',
+				subaction: 'vault_disconnect',
+				nonce: updraft_credentialtest_nonce
+			}, function(response) {
+				jQuery('#updraftvault_disconnect').html(updraftlion.disconnect);
+				try {
+					resp = jQuery.parseJSON(response);
+					if (resp.hasOwnProperty('html')) {
+						jQuery('#updraftvault_settings_connected').html(resp.html).slideUp();
+						jQuery('#updraftvault_settings_default').slideDown();
+					}
+				} catch (err) {
+					alert(updraftlion.unexpectedresponse+' '+response);
+					console.log(response);
+					console.log(err);
+				} 
+			});
+		} catch (err) {
+			jQuery('#updraftvault_disconnect').html(updraftlion.disconnect);
+			console.log(err);
+		}
+	});
+	
+	jQuery('#updraftvault_connect').click(function(e) {
+		e.preventDefault();
+		jQuery('#updraftvault_settings_default').slideUp();
+		jQuery('#updraftvault_settings_connect').slideDown();
+	});
+	
+	jQuery('#updraftvault_showoptions').click(function(e) {
+		e.preventDefault();
+		jQuery('#updraftvault_settings_default').slideUp();
+		jQuery('#updraftvault_settings_showoptions').slideDown();
+	});
+	
+	jQuery('#updraftvault_connect_go').click(function(e) {
+		jQuery('#updraftvault_connect_go').html(updraftlion.connecting);
+		jQuery.post(ajaxurl,  {
+			action: 'updraft_ajax',
+			subaction: 'vault_connect',
+			nonce: updraft_credentialtest_nonce,
+			email: jQuery('#updraftvault_email').val(),
+			pass: jQuery('#updraftvault_pass').val(),
+		}, function(response) {
+			jQuery('#updraftvault_connect_go').html(updraftlion.connect);
+			try {
+				resp = jQuery.parseJSON(response);
+			} catch(err) {
+				console.log(err);
+				console.log(response);
+				alert(updraftlion.unexpectedresponse+' '+response);
+				return;
+			}
+			if (resp.hasOwnProperty('e')) {
+				updraft_html_modal('<h4 style="margin-top:0px; padding-top:0px;">'+updraftlion.errornocolon+'</h4><p>'+resp.e+'</p>', updraftlion.disconnect, 400, 250);
+				if (resp.hasOwnProperty('code') && resp.code == 'no_quota') {
+					jQuery('#updraftvault_settings_connect').slideUp();
+					jQuery('#updraftvault_settings_default').slideDown();
+				}
+			} else if (resp.hasOwnProperty('connected') && resp.connected && resp.hasOwnProperty('html')) {
+				jQuery('#updraftvault_settings_connect').slideUp();
+				jQuery('#updraftvault_settings_connected').html(resp.html).slideDown();
+			} else {
+				console.log(response);
+				console.log(resp);
+				alert(updraftlion.unexpectedresponse+' '+response);
+			}
+			
+		});
+		return false;
+	});
+	
+	jQuery("#updraft-navtab-settings-content form input:not('.udignorechange'), #updraft-navtab-settings-content form select").change(function(e){
 		updraft_settings_form_changed = true;
 	});
 	jQuery("#updraft-navtab-settings-content form input[type='submit']").click(function (e) {
@@ -796,7 +1117,7 @@ jQuery(document).ready(function($){
 
 	var updraft_message_modal_buttons = {};
 	updraft_message_modal_buttons[updraftlion.close] = function() { jQuery(this).dialog("close"); };
-	jQuery( "#updraft-message-modal" ).dialog({
+	jQuery( "#updraft-message-modal").dialog({
 		autoOpen: false, height: 350, width: 520, modal: true,
 		buttons: updraft_message_modal_buttons
 	});
@@ -804,7 +1125,7 @@ jQuery(document).ready(function($){
 	var updraft_delete_modal_buttons = {};
 	updraft_delete_modal_buttons[updraftlion.deletebutton] = function() {
 		jQuery('#updraft-delete-waitwarning').slideDown();
-		timestamp = jQuery('#updraft_delete_timestamp').val();
+		var timestamps = jQuery('#updraft_delete_timestamp').val().split(',');
 		jQuery.post(ajaxurl, jQuery('#updraft_delete_form').serialize(), function(response) {
 			jQuery('#updraft-delete-waitwarning').slideUp();
 			var resp;
@@ -819,7 +1140,14 @@ jQuery(document).ready(function($){
 				} else if (resp.result == 'success') {
 					//jQuery('#updraft_showbackups').load(ajaxurl+'?action=updraft_ajax&subaction=countbackups&nonce='+updraft_credentialtest_nonce);
 					jQuery('#updraft-navtab-backups').load(ajaxurl+'?action=updraft_ajax&subaction=countbackups&nonce='+updraft_credentialtest_nonce);
-					jQuery('#updraft_existing_backups_row_'+timestamp).slideUp().remove();
+					for (var i = 0; i < timestamps.length; i++) {
+						var timestamp = timestamps[i];
+						jQuery('#updraft_existing_backups_row_'+timestamp).slideUp().remove();
+					}
+					if (jQuery('#updraft_existing_backups .updraft_existing_backups_row.backuprowselected').length < 1) {
+						jQuery('#ud_massactions').hide();
+					}
+					updraft_history_lastchecksum = false;
 					jQuery("#updraft-delete-modal").dialog('close');
 					alert(resp.message);
 				}
@@ -827,7 +1155,7 @@ jQuery(document).ready(function($){
 		});
 	};
 	updraft_delete_modal_buttons[updraftlion.cancel] = function() { jQuery(this).dialog("close"); };
-	jQuery( "#updraft-delete-modal" ).dialog({
+	jQuery( "#updraft-delete-modal").dialog({
 		autoOpen: false, height: 262, width: 430, modal: true,
 		buttons: updraft_delete_modal_buttons
 	});
@@ -839,12 +1167,17 @@ jQuery(document).ready(function($){
 		// Make a list of what files we want
 		var already_added_wpcore = 0;
 		var meta_foreign = jQuery('#updraft_restore_meta_foreign').val();
-		jQuery('input[name="updraft_restore[]"]').each(function(x,y){
+		jQuery('input[name="updraft_restore[]"]').each(function(x, y){
 			if (jQuery(y).is(':checked') && !jQuery(y).is(':disabled')) {
 				anyselected = 1;
 				var howmany = jQuery(y).data('howmany');
 				var type = jQuery(y).val();
-				if (1 == meta_foreign || (2 == meta_foreign && 'db' != type)) { type = 'wpcore'; }
+				if (1 == meta_foreign || (2 == meta_foreign && 'db' != type)) {
+					if ('wpcore' != type) {
+						howmany = jQuery('#updraft_restore_form #updraft_restore_wpcore').data('howmany');
+					}
+					type = 'wpcore';
+				}
 				if ('wpcore' != type || already_added_wpcore == 0) {
 					var restobj = [ type, howmany ];
 					whichselected.push(restobj);
@@ -919,6 +1252,27 @@ jQuery(document).ready(function($){
 			} else if (updraft_restore_stage == 2) {
 				updraft_restorer_checkstage2(1);
 			} else if (updraft_restore_stage == 3) {
+				var continue_restore = 1;
+				jQuery('#updraft_restoreoptions_ui input.required').each(function(index) {
+					if (continue_restore == 0) return;
+					var sitename = jQuery(this).val();
+					if (sitename == '') {
+						alert(updraftlion.pleasefillinrequired);
+						continue_restore = 0;
+					} else if (jQuery(this).attr('pattern') != '') {
+						var pattern = jQuery(this).attr('pattern');
+						var re = new RegExp(pattern, "g");
+						if (!re.test(sitename)) {
+							alert(jQuery(this).data('invalidpattern'));
+							continue_restore = 0;
+						}
+					}
+				});
+				if (!continue_restore) return;
+				var restore_options = jQuery('#updraft_restoreoptions_ui select, #updraft_restoreoptions_ui input').serialize();
+				console.log("Restore options: "+restore_options);
+				jQuery('#updraft_restorer_restore_options').val(restore_options);
+				// This must be done last, as it wipes out the section with #updraft_restoreoptions_ui
 				jQuery('#updraft-restore-modal-stage2a').html(updraftlion.restoreproceeding);
 				jQuery('#updraft_restore_form').submit();
 			}
@@ -929,25 +1283,41 @@ jQuery(document).ready(function($){
 	
 	updraft_restore_modal_buttons[updraftlion.cancel] = function() { jQuery(this).dialog("close"); };
 
-	jQuery( "#updraft-restore-modal" ).dialog({
+	jQuery( "#updraft-restore-modal").dialog({
 		autoOpen: false, height: 505, width: 590, modal: true,
 		buttons: updraft_restore_modal_buttons
 	});
 
-	jQuery("#updraft-iframe-modal" ).dialog({
+	jQuery("#updraft-iframe-modal").dialog({
 		autoOpen: false, height: 500, width: 780, modal: true
 	});
 
-	jQuery("#updraft-backupnow-inpage-modal" ).dialog({
+	jQuery("#updraft-backupnow-inpage-modal").dialog({
 		autoOpen: false, height: 345, width: 580, modal: true
 	});
 	
 	var backupnow_modal_buttons = {};
 	backupnow_modal_buttons[updraftlion.backupnow] = function() {
 		
-		var backupnow_nodb = jQuery('#backupnow_nodb').is(':checked') ? 1 : 0;
-		var backupnow_nofiles = jQuery('#backupnow_nofiles').is(':checked') ? 1 : 0;
-		var backupnow_nocloud = jQuery('#backupnow_nocloud').is(':checked') ? 1 : 0;
+		var backupnow_nodb = jQuery('#backupnow_includedb').is(':checked') ? 0 : 1;
+		var backupnow_nofiles = jQuery('#backupnow_includefiles').is(':checked') ? 0 : 1;
+		var backupnow_nocloud = jQuery('#backupnow_includecloud').is(':checked') ? 0 : 1;
+		
+		var onlythesefileentities = '';
+		jQuery('#backupnow_includefiles_moreoptions input[type="checkbox"]').each(function(index) {
+			if (!jQuery(this).is(':checked')) { return; }
+			var name = jQuery(this).attr('name');
+			if (name.substring(0, 16) != 'updraft_include_') { return; }
+			var entity = name.substring(16);
+			if (onlythesefileentities != '') { onlythesefileentities += ','; }
+			onlythesefileentities += entity;
+		});
+
+		if ('' == onlythesefileentities && 0 == backupnow_nofiles) {
+			alert(updraftlion.nofileschosen);
+			return;
+		}
+		
 		if (backupnow_nodb && backupnow_nofiles) {
 			alert(updraftlion.excludedeverything);
 			return;
@@ -961,12 +1331,12 @@ jQuery(document).ready(function($){
 			});
 		}, 1700);
 		
-		updraft_backupnow_go(backupnow_nodb, backupnow_nofiles, backupnow_nocloud, '', '', jQuery('#backupnow_label').val());
+		updraft_backupnow_go(backupnow_nodb, backupnow_nofiles, backupnow_nocloud, onlythesefileentities, '', jQuery('#backupnow_label').val());
 	};
 	backupnow_modal_buttons[updraftlion.cancel] = function() { jQuery(this).dialog("close"); };
 	
-	jQuery("#updraft-backupnow-modal" ).dialog({
-		autoOpen: false, height: 355, width: 480, modal: true,
+	jQuery("#updraft-backupnow-modal").dialog({
+		autoOpen: false, height: 472, width: 610, modal: true,
 		buttons: backupnow_modal_buttons
 	});
 
@@ -974,7 +1344,7 @@ jQuery(document).ready(function($){
 		autoOpen: false, height: updraftlion.migratemodalheight, width: updraftlion.migratemodalwidth, modal: true,
 	});
 
-	jQuery( "#updraft-poplog" ).dialog({
+	jQuery( "#updraft-poplog").dialog({
 		autoOpen: false, height: 600, width: '75%', modal: true,
 	});
 	
@@ -1049,9 +1419,11 @@ jQuery(document).ready(function($){
 		updraft_page_is_visible = 1;
 		updraft_console_focussed_tab = 4;
 	});
-	jQuery('#updraft-navtab-settings, #updraft-navtab-settings2').click(function(e) {
-		jQuery(this).parents('.updraftmessage').remove();
+	jQuery('#updraft-navtab-settings, #updraft-navtab-settings2, #updraft_backupnow_gotosettings').click(function(e) {
 		e.preventDefault();
+		// These next two should only do anything if the relevant selector was clicked
+		jQuery(this).parents('.updraftmessage').remove();
+		jQuery('#updraft-backupnow-modal').dialog('close');
 		jQuery('#updraft-navtab-status-content').hide();
 		jQuery('#updraft-navtab-backups-content').hide();
 		jQuery('#updraft-navtab-expert-content').hide();
@@ -1089,6 +1461,8 @@ jQuery(document).ready(function($){
 	jQuery.get(ajaxurl, { action: 'updraft_ajax', subaction: 'ping', nonce: updraft_credentialtest_nonce }, function(data, response) {
 		if ('success' == response && data != 'pong' && data.indexOf('pong')>=0) {
 			jQuery('#ud-whitespace-warning').show();
+			console.log("UpdraftPlus: Extra output warning: response (which should be just (string)'pong') follows.");
+			console.log(data);
 		}
 	});
 
@@ -1110,7 +1484,7 @@ jQuery(document).ready(function($){
 		uploader.bind('Init', function(up){
 			var uploaddiv = $('#plupload-upload-ui');
 			
-			if(up.features.dragdrop){
+			if (up.features.dragdrop){
 				uploaddiv.addClass('drag-drop');
 				$('#drag-drop-area')
 				.bind('dragover.wp-uploader', function(){ uploaddiv.addClass('drag-over'); })
@@ -1264,8 +1638,16 @@ jQuery(document).ready(function($){
 		e.preventDefault();
 		var data = jQuery(this).data('rawbackup');
 		if (data != null && data != '') {
-			updraft_html_modal(data, updraftlion.raw);
+			updraft_html_modal(data, updraftlion.raw, 780, 500);
 		}
+	});
+	
+
+	jQuery('.icon-dropdown').selectric({
+		optionsItemBuilder: function(itemData, element, index){
+			return element.val().length ? '<span class="ico ico-'+element.val()+'"></span>'+itemData.text : itemData.text;
+		},
+		inheritOriginalWidth: false
 	});
 	
 });
@@ -1290,7 +1672,7 @@ jQuery(document).ready(function($){
 		uploader.bind('Init', function(up){
 			var uploaddiv = $('#plupload-upload-ui2');
 
-			if(up.features.dragdrop){
+			if (up.features.dragdrop){
 				uploaddiv.addClass('drag-drop');
 				$('#drag-drop-area2')
 				.bind('dragover.wp-uploader', function(){ uploaddiv.addClass('drag-over'); })
@@ -1345,7 +1727,7 @@ jQuery(document).ready(function($){
 				} else if (response.response.substring(0,3) == 'OK:') {
 					bkey = response.response.substring(3);
 					$('#' + file.id + " .fileprogress").hide();
-					$('#' + file.id).append(updraftlion.uploaded+' <a href="?page=updraftplus&action=downloadfile&updraftplus_file='+bkey+'&decrypt_key='+$('#updraftplus_db_decrypt').val()+'">'+updraftlion.followlink+'</a> '+updraftlion.thiskey+' '+$('#updraftplus_db_decrypt').val().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"));
+					$('#' + file.id).append(updraftlion.uploaded+' <a href="?page=updraftplus&action=downloadfile&updraftplus_file='+bkey+'&decrypt_key='+encodeURIComponent($('#updraftplus_db_decrypt').val())+'">'+updraftlion.followlink+'</a> '+updraftlion.thiskey+' '+$('#updraftplus_db_decrypt').val().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"));
 				} else {
 					alert(updraftlion.unknownresp+' '+response.response);
 				}
@@ -1423,9 +1805,9 @@ jQuery(document).ready(function($){
 		{
 			$(this).bind("touchstart click.triple", data, tripleHandler);
 		},
-  teardown: function(namespaces)
-  {
-	  $(this).unbind("touchstart click.triple", data, tripleHandler);
-  }
+		teardown: function(namespaces)
+		{
+			$(this).unbind("touchstart click.triple", data, tripleHandler);
+		}
 	};
 })(jQuery);

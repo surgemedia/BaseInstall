@@ -3,7 +3,12 @@
     "main.js": {
       "files": [
         "../bower_components/youtubeBackground/src/jquery.youtubebackground.js",
-        "scripts/main.js"
+        "../bower_components/smooth-scroll/smooth-scroll.min.js",
+        "../bower_components/shuffle/jquery.shuffle.min.js",
+        "scripts/main.js",
+        "scripts/custom.js",
+        "scripts/shuffle_option.js"
+
       ],
       "main": true
     },

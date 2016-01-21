@@ -2,7 +2,7 @@
 Contributors: metaphorcreations
 Tags: posts, post, duplicate, duplication
 Requires at least: 3.0
-Tested up to: 4.0
+Tested up to: 4.4
 Stable tag: /trunk/
 License: GPL2
 
@@ -41,6 +41,38 @@ Check out the 'Installation' tab.
 
 == Changelog ==
 
+= 2.14 =
+* New setting to append a custom string to the duplicate post slug
+
+= 2.13 =
+* Fixed bug due to "wp_old_slug_redirect" function in core
+
+= 2.12 =
+* Fixed page reload bug after duplication
+
+= 2.11 =
+* Added ability to duplicate posts to other post types
+
+= 2.10 =
+* Added page duplication support for the WP Customer Area plugin
+
+= 2.9 =
+* Now supports multiple values of a single custom field during duplication
+
+= 2.8 =
+* Added German language files
+* Added Japanese language files
+* Updated settings file for localization
+
+= 2.7 =
+* Modified duplicated posts data: post_date_gmt, post_modified, post_modified_gmt
+
+= 2.6 =
+* Changed the default published status to Draft
+
+= 2.5 =
+* Changed the default post date of duplicated posts to be the current time.
+
 = 2.4 =
 * Cleaned up some code.
 * Updated localization code and files.
@@ -67,4 +99,4 @@ Must upgrade in order for the plugin to work. The file paths where initially wro
 
 == Upgrade Notice ==
 
-Code cleanup and localization updates.
+New setting to append a custom string to the duplicate post slug.

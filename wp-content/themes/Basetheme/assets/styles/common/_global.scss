@@ -13,11 +13,57 @@ h2 {
 	 text-shadow:none;
 	font-weight:100;
 }
+h2.alt {
+	font-family: $primary-font;
+	font-weight:400;
+	text-transform:uppercase;
+	color:$teal;
+	margin:1em 0em;
+}
 p {
-
+	font-family:$secondary-font;
+	font-weight:300;
 }
 .pattern-bg  {
 	background-image: url($pattern);
 	-webkit-background-size: 0.7em;
 	background-size: 0.7em;
+}
+
+.before_auto {
+	position:absolute;
+	width:100%;
+	height:100%;
+	content:" ";
+}
+.grey-bg {
+	background:$grey;
+}
+.teal-dark-bg {
+	background: $teal-dark;
+}
+.blue-bg {background-color:$blue;}
+.yellow-bg {background-color:$yellow;}
+.red-bg {background-color:$red;}
+.teal-bg {background-color:$teal;}
+
+
+.empty-btn {
+	background-color:transparent;
+	border:0px;
+	box-shadow:0px;
+}
+
+.text-white {
+	color:#fff;
+}
+.text-puff {
+	display: block;
+    margin: 7em auto 7em auto;
+    width: 80%;
+    float: none;
+    p {
+    	line-height:2em;
+
+    }
 }

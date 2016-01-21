@@ -1,7 +1,7 @@
 <header class="banner" role="banner">
   <div class="container">
     <div id="navtag">
-      <a class="brand" href="<?= esc_url(home_url('/')); ?>"><i class="surge-icon surge">S</i></a>
+      <a class="brand" href="<?= esc_url(home_url('/')); ?>"><i class="surge-logo-symbol"></i></a>
       <nav class="navbar navbar-default col-xs-12 ">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#primary-navigation" aria-expanded="false">

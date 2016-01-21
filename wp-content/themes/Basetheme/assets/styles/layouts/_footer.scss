@@ -1,5 +1,18 @@
 #footer{
-	
+	height:35vh;
+	background:$teal-alt;
+	color:#fff;
+	font-family:$secondary-font;
+	ul,li {
+		list-style:none;
+	}
+
+	i.surge-logo-symbol {
+		font-size:5em;
+		margin-top: 0.5em;
+		margin-bottom: 0.5em;
+		display:block;
+	}
 	.copyRight{
 		// margin-top:0.1em; 
 		.title{

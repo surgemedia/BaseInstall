@@ -36,5 +36,9 @@
         "./assets/fonts/bootstrap/glyphicons-halflings-regular.woff2"
       ]
     }
+  },
+  "devDependencies": {
+    "smooth-scroll": "~1.0.1",
+    "shufflejs": "~3.1.1"
   }
 }

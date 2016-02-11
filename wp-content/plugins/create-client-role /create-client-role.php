@@ -9,8 +9,18 @@ Version: 1.0.0.0
 License: GPLv3 or later
 ***/
 
-function add_roles_on_plugin_activation() {
-       add_role( 'client', 'Client', array( 'read' => true, 'level_10' => true ) );
-   }
-   register_activation_hook( __FILE__, 'add_roles_on_plugin_activation' );
+
+if(get_role('client')) {
+	remove_role('client' );
+	}
+add_action('init', 'cloneUserRole');
+function cloneUserRole()
+{
+ global $wp_roles;
+ if (!isset($wp_roles))
+ $wp_roles = new WP_Roles();
+ $adm = $wp_roles->get_role('administrator');
+ // Adding a new role with all admin caps.
+ $wp_roles->add_role('client', 'Client', $adm->capabilities);
+}
 ?>

@@ -73,3 +73,76 @@
   $(document).ready(UTIL.loadEvents);
 })(jQuery); // Fully reference jQuery after this point.
 
+(function($) {
+  if($('#video-bg').data('video-id')){
+  $('#video-bg').YTPlayer({
+    videoId: $('#video-bg').data('video-id'),
+     playerVars: {
+      modestbranding: 0,
+      autoplay: 1,
+      controls: 0,
+      showinfo: 0,
+      wmode: 'transparent',
+      branding: 0,
+      rel: 0,
+      autohide: 0
+    },
+    callback: function() {
+      // console.log($('#video-bg').data('video-id'));
+    }
+    });   
+  }
+})(jQuery);
+
+(function($) {
+/*================================
+=            Carousel            =
+================================*/
+// Home
+$('#carousel-id').carousel({
+  interval: 5000,
+  pause: false
+});
+// Case Study
+$('.caseStudy-paragrah').each(function(){
+        $(this).carousel({
+          pause: true,
+          interval: false
+        });
+    });
+})(jQuery);
+
+
+
+(function($) {
+/*======================================
+=            Scrolling down            =
+======================================*/
+function slickScroll(trigger_class,offset){
+    jQuery(trigger_class).click(function(e){
+      e.preventDefault();
+      var location = $(this).attr('href');
+      jQuery('html, body').animate({
+          scrollTop: jQuery(location).offset().top - offset
+      }, 500);
+      return false;
+  });
+}
+slickScroll('.slickScroll',40);
+})(jQuery);
+
+(function($) {
+/*======================================
+=            Dropdown js           =
+======================================*/
+  $('ul.dropdown-menu [data-toggle=dropdown]').on('click', function(event) {
+      event.preventDefault(); 
+      event.stopPropagation(); 
+      $(this).parent().siblings().removeClass('open');
+      $(this).parent().toggleClass('open');
+  });
+          // "scripts/custom.js",
+        // "scripts/shuffle_option.js"
+        // "../bower_components/youtubeBackground/src/jquery.youtubebackground.js",
+        // "../bower_components/shuffle/jquery.shuffle.min.js",
+})(jQuery);

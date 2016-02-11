@@ -20,12 +20,15 @@ $sage_includes = [
   'lib/extras.php',                // Custom functions
   'lib/add-menu-locations.php',    // Add Menu Location
   'lib/nav-walker.php',            // Navigation compatible with bootstrap & Sage
-  'lib/function-debug.php',                // Custom functions
-  'lib/aq_resizer.php',                // Custom functions
-  'lib/function-get-featured-image-url.php',                // Custom functions
-  'lib/function-includePart.php',                // Custom functions
-  'lib/function-truncate-content.php',                // Custom functions
-  'lib/function-hex2rgba.php',                // Custom functions
+  'lib/function-debug.php',                         // Custom functions
+  'lib/aq_resizer.php',                             // Custom functions
+  'lib/gravity_forms-v5.php',                       // Custom functions
+  'lib/function-get-featured-image-url.php',        // Custom functions
+  'lib/function-includePart.php',                   // Custom functions
+  'lib/function-truncate-content.php',              // Custom functions
+  'lib/function-hex2rgba.php',                      // Custom functions
+  'lib/function-display-gravity-form.php',                      // Custom functions
+
   'post_types/action-post-type-case-study.php',                // Custom Post Type
   'post_types/action-post-type-work.php',               // Custom Post Type
   'post_types/action-post-type-people.php',               // Custom Post Type

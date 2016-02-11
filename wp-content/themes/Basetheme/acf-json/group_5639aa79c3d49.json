@@ -217,6 +217,22 @@
             "min": "",
             "max": "",
             "return_format": "id"
+        },
+        {
+            "key": "field_56a1932fb1595",
+            "label": "email_sign_up",
+            "name": "email_sign_up",
+            "type": "gravity_forms_field",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "allow_null": 0,
+            "allow_multiple": 0
         }
     ],
     "location": [
@@ -236,5 +252,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1446785215
+    "modified": 1453430455
 }

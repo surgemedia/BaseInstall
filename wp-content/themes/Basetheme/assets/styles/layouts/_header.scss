@@ -48,7 +48,7 @@
 		    	font-family: $primary-font;
 					    	    border-right:1px solid rgba($yellow-dark,0.1);
 				    text-transform: uppercase;
-				    padding: 1.5em 1em 1.55em 1em;
+				    padding: 1.5em 0.7em 1.55em 1em;
 				    line-height: 1.8em;
 				    height: 100%;
 					transition: 0.3s ease all;
@@ -60,8 +60,32 @@
 		}
 	}
 	&:hover {
-		width:360px;
+		width:415px;
 		transition: 0.3s ease all;
+					transition: 0.3s ease all;
+
+		.brand {
+			i {
+				background:#fff;
+				color:$teal;
+				    padding: 0 .15em;
+				    font-size: 7em;
+				    line-height: 1em;
+				    vertical-align: top;
+					transition: 0.3s ease background-color;
+					transition: 0.3s ease content;
+
+
+				&:before {
+					content:'\0042';
+					line-height: 0.5em;
+					transition: 0.3s ease background-color;
+					transition: 0.3s ease content;
+
+
+				}
+			}
+		}
 	}
 }
 

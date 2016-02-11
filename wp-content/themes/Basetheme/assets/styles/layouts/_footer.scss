@@ -14,24 +14,29 @@
 		display:block;
 	}
 	.copyRight{
-		// margin-top:0.1em; 
+		// margin-top:0.1em;  
 		.title{
 			font-size: 24px;
 		}
 	}
-
+	label {
+			display:none !important;
+		}
 	.signUp{
 		text-align: center;
+
 		.gform_heading{
 			margin-top: .25em;
 			h3{
     			margin: 0;
+    			text-align:center;
 			}
 		}
 		.gform_body{
-			margin-left:10%; 
-			width:60%;
-			float:left;
+			margin-left: 10%;
+			width: 60%;
+			float: left;
+			display: inline-block;
 			.ginput_container input{
 				width:100%;
 				height:3em;
@@ -43,9 +48,12 @@
 			}
 		}
 		.gform_footer{
-			width:20%;
-			float:left;
-			padding-top: 1.45em;
+			    width: 20%;
+			    float: left;
+			    padding-top: 1.45em;
+			    clear: none;
+			    padding: 0px;
+			    margin: 5px 0px 0px 0px;
 			input[type="submit"]{
 				width: 100%;
 				height: 3em;

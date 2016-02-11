@@ -14,9 +14,10 @@
     <small> Privacy Policy</small>
      </div>
     <div class="col-lg-6 signUp">
-    	
+    <?php $frontpage_ID = get_option('page_on_front'); ?>
+    	<?php displayGravityForm(get_field('email_sign_up',$frontpage_ID)) ?>
     	<!-- form goes here -->
-        <div class="gf_browser_chrome gform_wrapper" id="gform_wrapper_3"><a id="gf_3" class="gform_anchor"></a><form method="post" enctype="multipart/form-data" target="gform_ajax_frame_3" id="gform_3" action="/PinnacleProperties/property-search/#gf_3">
+        <!-- <div class="gf_browser_chrome gform_wrapper" id="gform_wrapper_3"><a id="gf_3" class="gform_anchor"></a><form method="post" enctype="multipart/form-data" target="gform_ajax_frame_3" id="gform_3" action="/PinnacleProperties/property-search/#gf_3">
                         <div class="gform_heading">
                             <h3 class="gform_title">Sign Up for our newsletter. It's awesome</h3>
                             <span class="gform_description"></span>
@@ -37,7 +38,7 @@
             
         </div>
                         </form>
-                        </div>
+                        </div> -->
     </div>
     <div class="col-lg-3 followUs">
     	<span class="title text-center">Follow Us</span>

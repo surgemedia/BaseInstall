@@ -6,14 +6,14 @@
 			list-style:none;
 			text-align: center;
 			display: inline-block;
-			margin: 2em 10em;
+			margin: 2em 2em; 
 		&:first-child {
 			margin-left: 0px;
-			margin-right: 0px;
+			// margin-right: 0px;
 
 		}
 		&:last-child {
-			margin-left: 0px;
+			// margin-left: 0px;
 			margin-right: 0px;
 
 		}

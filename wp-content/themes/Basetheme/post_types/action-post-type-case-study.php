@@ -23,7 +23,7 @@ function casestudies_init() {
 		'label'               => __( 'Case Study', 'text_domain' ),
 		'description'         => __( 'Case Studies of our clients', 'text_domain' ),
 		'labels'              => $labels,
-		'supports'            => array( 'title', 'editor', 'thumbnail', 'revisions', ),
+		'supports'            => array( 'title', 'thumbnail', 'revisions', ),
 		'taxonomies'          => array( 'services', 'clients' ),
 		'hierarchical'        => false,
 		'public'              => true,

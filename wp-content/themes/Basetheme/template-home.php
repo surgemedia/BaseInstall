@@ -9,7 +9,7 @@
 
 <?php get_template_part('templates/carousel'); ?>
 
-<section id="main-content" class="row">
+<section id="main-content" class="row ">
 	<div class="container">
 		<main class="quote text-center"><?php the_content(); ?></main>
 		<small class="col-lg-12 text-center">Aegir Brands &amp; Ben Trowse, Founding Partners</small>
@@ -19,6 +19,7 @@
 
 
 <section id="work" class="container-fluid">
+
 <div class="row">
 <?php 
 // debug(get_field('featured_work'));
@@ -32,7 +33,8 @@ for ($i=0; $i < sizeof($featured_work); $i++) {
 	$work_type = $obj[type_of_work];
 	array_push($work_home, $work_type);
 	array_push($case_study_home, $case_study_obj->ID);
-	$case_study_url = get_permalink($case_study_obj->ID);
+
+
 }
 for ($j=0; $j < sizeof($case_study_home); $j++) {
 		$args = array ( 
@@ -47,21 +49,20 @@ for ($j=0; $j < sizeof($case_study_home); $j++) {
 		'post__in' => get_field('selected_work',$case_study_home[$j]),
 		'orderby' => 'post__in'
 		);
+		$case_study_url = get_permalink($case_study_home[$j]);
+
 			$case_query = new WP_Query( $args );
 			if ( $case_query->have_posts() ) {
 			while ( $case_query->have_posts() ) { 
 					$case_query->the_post();
-			// $client = wp_get_post_terms(get_the_id(), 'clients', array("fields" => "all"))[0];
-			// $url = getFeaturedUrl( get_the_id() );
-			// debug($work_home[$j]);
-			// debug($client->name);
+					// debug($case_study_url);
 	 		includePart('templates/work-obj.php',
 	 			getFeaturedUrl( get_the_id() ),
 	 			hex2rgba( get_field('overlay_color') , 0.8),
-	 			wp_get_post_terms(get_the_id(), 'services', array("fields" => "all"))[0],
+	 			wp_get_post_terms(get_the_id(), 'services', array("fields" => "all"))[0]->name,
 	 			$case_study_url,
 	 			$work_home[$j],
-	 			wp_get_post_terms(get_the_id(), 'clients', array("fields" => "all"))[0]
+	 			wp_get_post_terms(get_the_id(), 'clients', array("fields" => "all"))[0]->name
 	 			);
 
 			} 

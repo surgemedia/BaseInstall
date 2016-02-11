@@ -2,10 +2,10 @@
 	$image = $args[1];
 	$color = $args[2];
 	// $client = $args[3];
-	$service = $args[3]->name; 
+	$service = $args[3]; 
 	$case_study_url = $args[4]; //correct
 	$work_home_j = $args[5];
-	$client_name = $args[6]->name;
+	$client_name = $args[6];
 	 ?>
 
 

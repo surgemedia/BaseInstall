@@ -11,7 +11,7 @@ $exlude = array();
 $client = wp_get_post_terms(get_field('selected_work')[0], 'clients', array("fields" => "all"))[0];
 // debug($client);
 ?>
-<script>
+<script type="text/javascript">
 function getFrameContent(button){
   jQuery('#replaceable').empty();
   var html;
@@ -25,9 +25,16 @@ function getFrameContent(button){
     <div class="container">
         <h1><?php echo $client->name; ?></h1>
         <ul class="col-md-6 list-unstyled col-md-offset-3">
-            <li class=""><a href="#Design">Design</a></li>
-            <li class=""><a href="#Development">Development</a></li>
-            <li class=""><a href="#Video">Video</a></li>
+        <?php 
+        $services_ids =  get_field('selected_work');
+        $service_nav = [];
+        // debug($services_ids[0]);
+        for ($i=0; $i < sizeof($services_ids); $i++) { 
+         array_push($service_nav,wp_get_post_terms($services_ids[$i], 'services', array("fields" => "all"))[0]->name);
+        } ?>
+        <?php for ($i=0; $i < sizeof( $service_nav ); $i++) { ?>
+              <li class=""><a href="#<?php echo $service_nav[$i] ?>"><?php echo $service_nav[$i] ?></a></li>
+        <?php } ?>
         </ul>
     </div>
 </div>
@@ -103,9 +110,14 @@ wp_reset_postdata();
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><div data-icon="ei-close" data-size="s">
         </button>
     <div class="modal-content">
-      <div id="replaceable"></div>
+      <div id="replaceable" class=""></div>
     </div>
   </div>
 </div>
+<script>
+  jQuery('#caseStudyModal').on('hidden.bs.modal', function (e) {
+   jQuery('#replaceable').empty();
+  });
+</script>
 
 

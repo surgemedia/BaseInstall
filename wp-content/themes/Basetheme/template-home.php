@@ -12,7 +12,7 @@
 <section id="main-content" class="row ">
 	<div class="container">
 		<main class="quote text-center"><?php the_content(); ?></main>
-		<small class="col-lg-12 text-center">Aegir Brands &amp; Ben Trowse, Founding Partners</small>
+		<small class="col-lg-12 text-center"><?php the_field('quote_footer'); ?></small>
 	</div>
 </section>
 

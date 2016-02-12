@@ -32,7 +32,7 @@ style="background-image: url('<?php echo $background_image; ?>')" >
                     $button_text = "See Code";
                 }
 
-                // var_dump(strpos($video,'youtube'));
+                // var_dump($video);
                 // var_dump(strpos($video,'codepen'));
 
                   preg_match('/src="(.+?)"/', $video, $matches);
@@ -40,10 +40,10 @@ style="background-image: url('<?php echo $background_image; ?>')" >
                  $src = explode('?',$src)[0];
                   ?>
                  <!-- Button trigger modal -->
-                <button onclick="getFrameContent(this);" type="button" class="text-btn" data-toggle="modal" data-target="#caseStudyModal" data-contentid="<?php echo $carsoul_id.$count ?>">
+                <button onclick="getFrameContent(this);" type="button" class="text-btn" data-toggle="modal" data-target="#caseStudyModal" data-contentid="<?php echo $carsoul_id.$i ?>">
                <?php echo $button_text; ?>
                 </button>
-                <div class="hiddenFrame" data-frameid="<?php echo $carsoul_id.$count ?>" >
+                <div class="hiddenFrame" data-frameid="<?php echo $carsoul_id.$i ?>" >
                     <?php echo $video; ?>
                 </div>
 

@@ -20,8 +20,7 @@
 		z-index: 2;
 	}
 	h1 {
-		
-		font-size:4em;
+		@extend .h1;
 	    font-weight: 400;
 	    text-transform: uppercase;
 	    text-shadow: none;
@@ -34,11 +33,10 @@
 			a {
 				padding-left:0.3em;
 				padding-right:0.3em;
-
 				font-family:$secondary-font;
 				color:#fff;
-				font-size:2em;
 				font-weight:100;
+				@extend .p3;
 			}
 		}
 	}

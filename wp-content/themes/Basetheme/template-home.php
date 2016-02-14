@@ -11,8 +11,12 @@
 
 <section id="main-content" class="row ">
 	<div class="container">
-		<main class="quote text-center"><?php the_content(); ?></main>
+		<main class="quote text-center"><?php the_content(); ?>
+		<i class="surge-icon-quotation_mark_start"></i>
+		<i class="surge-icon-quotation_mark_end"></i>
+		</main>
 		<small class="col-lg-12 text-center"><?php the_field('quote_footer'); ?></small>
+		
 	</div>
 </section>
 
@@ -57,7 +61,7 @@ for ($j=0; $j < sizeof($case_study_home); $j++) {
 					$case_query->the_post();
 					// debug($case_study_url);
 	 		includePart('templates/work-obj.php',
-	 			getFeaturedUrl( get_the_id() ),
+	 			aq_resize(getFeaturedUrl( get_the_id() ), 645,485,true,true,true),
 	 			hex2rgba( get_field('overlay_color') , 0.8),
 	 			wp_get_post_terms(get_the_id(), 'services', array("fields" => "all"))[0]->name,
 	 			$case_study_url,
@@ -77,7 +81,7 @@ for ($j=0; $j < sizeof($case_study_home); $j++) {
 <section id="casestudy">
 	<hgroup class="text-center">
 		<h1>Our Clients</h1>
-		<h2>The passion for what we do comes through  <br> our Outstanding Clients</h2>
+		<p>The passion for what we do comes through  <br> our Outstanding Clients</p>
 	</hgroup>
 	<div class="container-fluid">
 	<?php 
@@ -90,7 +94,6 @@ for ($j=0; $j < sizeof($case_study_home); $j++) {
 
 		// The Query
 		$query = new WP_Query( $args );
-
 		// The Loop
 		if ( $query->have_posts() ) {
 			while ( $query->have_posts() ) {

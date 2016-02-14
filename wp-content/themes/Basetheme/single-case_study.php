@@ -103,6 +103,9 @@ $count++;
 // Restore original Post Data
 wp_reset_postdata();
 ?>
+<div id="more_projects">
+  
+</div>
 <?php endwhile; ?>
 <!-- Modal -->
 <div class="modal fade" id="caseStudyModal" tabindex="-1" role="dialog" aria-labelledby="caseStudyModal">

@@ -17,7 +17,10 @@ position: relative;
 	    left: 0px;
 	    text-shadow:none;
 	    h1 { 
-	    	font-size:14em; margin:0px; padding: 0; line-height:0.8em;
+	    	font-size:20em; 
+	    	margin:0px; 
+	    	padding: 0;
+	    	 line-height:0.8em;
 	    	a { 
 	    		color:#fff;
 	    		text-decoration:none;
@@ -28,7 +31,10 @@ position: relative;
 	    		
 	    	}
 	    }
-	    h2 { font-size:4em;  margin:0px; padding: 0; }
+	    h2 { 
+		@extend .p1;
+	     margin:0px;
+	     padding: 0; }
 	}
 	#carousel-id {
 		height:100vh;
@@ -76,21 +82,48 @@ position: relative;
 	min-height:50vh;
 	background: $teal-dark;
 	color:#fff;
-	font-size:2em;
-	line-height:2em;
-	font-weight:100;
+	padding-top:3em;
+	padding-bottom:4em;
+
+	p {
+		@extend .p3;
+		font-weight: 100;
+		line-height: 1.7em;
+	}
 	main {
 		display:block;
 		margin:2em auto 1em auto;
 		width:60%; 
 		float:none;
+		position:relative;
+
 	}
 	small {
+		margin-top: 1em;
 		font-family:$thin-font;
-		font-weight:100;
 		text-transform:uppercase;
 		color:$light-blue;
+		font-size:2.4em;
 	}
+}
+#main-content  {
+	.surge-icon-quotation_mark_start,
+	.surge-icon-quotation_mark_end {
+	position:absolute;
+	top:0px;
+	}
+	.surge-icon-quotation_mark_start {
+    left: -1.8em;
+	top: 0.5em;
+    font-size: 4em;
+	}
+	.surge-icon-quotation_mark_end {
+	right: -1.8em;
+    font-size: 4em;
+    left: auto;
+    top: 85%;
+	}
+
 }
 
 #work {
@@ -105,10 +138,15 @@ position: relative;
 	}
 	h1 {
 		color:$blue;
-		font-size:4em;
+		@extend .h2;
+		font-weight: 500;
+		font-family: $primary-font;
 		margin-bottom:0.5em;
 	}
-	h2 {line-height:1.3em;}
+	p { 
+		@extend .p3;
+		font-weight: 100;
+	}
 	.casestudy-obj {
 		text-align:center;
 		min-height:150px;

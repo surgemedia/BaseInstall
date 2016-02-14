@@ -2,7 +2,7 @@
 	background:$yellow;
 	position:fixed;
 	z-index:9999;
-	width: 74px;
+	width: 73px;
     overflow: hidden;
     height: 68px;
     transition: 0.3s ease all;
@@ -22,7 +22,7 @@
 		    display: inline-block;
 		    line-height: 2.2em;
 		    margin: 0px;
-		    font-size: 2.6em;
+		    font-size: 3.6em;
 			display:inline-block;
 			text-align:center;
 			background:$teal;
@@ -46,12 +46,13 @@
 		    a {
 		    	color:$teal-dark;
 		    	font-family: $primary-font;
-					    	    border-right:1px solid rgba($yellow-dark,0.1);
-				    text-transform: uppercase;
-				    padding: 1.5em 0.7em 1.55em 1em;
-				    line-height: 1.8em;
-				    height: 100%;
-					transition: 0.3s ease all;
+				border-right:1px solid rgba($yellow-dark,0.1);
+				 text-transform: uppercase;
+				 padding: 1.5em 0.7em 1.55em 1em;
+				 line-height: 1.8em;
+				 height: 100%;
+				transition: 0.3s ease all;
+				font-size:1.34em;
 				
 		    }
 		    li:last-child a{
@@ -69,11 +70,12 @@
 				background:#fff;
 				color:$teal;
 				    padding: 0 .15em;
-				    font-size: 7em;
+				    // font-size: 7em;
 				    line-height: 1em;
 				    vertical-align: top;
 					transition: 0.3s ease background-color;
 					transition: 0.3s ease content;
+		   			font-size:11em;
 
 
 				&:before {

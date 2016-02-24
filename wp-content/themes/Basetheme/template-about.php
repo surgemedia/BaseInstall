@@ -72,7 +72,8 @@ endif;
 		$args = array (
 			'post_type'              => array( 'staff' ),
 			'posts_per_page'	=> -1,
-			// 'post__in' => get_field('staff'),
+			'post__in' => get_field('staff_members'),
+            'orderby' => 'post__in'
 		);
 
 		// The Query

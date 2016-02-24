@@ -149,16 +149,17 @@ position: relative;
 	}
 	.casestudy-obj {
 		text-align:center;
-		min-height:150px;
+		height:180px;
 		margin-top:($grid-gutter-width*2);
 		a {
 			display:block;
 			width:100%;
 			text-align:center;
 			img {
-				width:50%;
-	
+				// width:50%;
 				float:none;
+				position:relative;
+				top:-50px;
 			}
 		}
 	}

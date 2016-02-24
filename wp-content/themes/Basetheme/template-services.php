@@ -4,7 +4,15 @@
 */
 ?>
 <?php while (have_posts()) : the_post(); ?>
-<?php includePart('templates/molecule-small-jumbotron.php',getFeaturedUrl(),get_the_content(),'size-s',true); ?>
+<?php 
+$paragraph = get_field('services_paragraph');
+ $image_url = getFeaturedUrl();
+ ?>
+ <?php for ($i=0; $i < sizeof($paragraph); $i++) { ?>
+<?php if($paragraph[$i]['hashtag'] == $_GET['service']){
+    $image_url = $paragraph[$i]['image']; 
+  } } ?>
+<?php includePart('templates/molecule-small-jumbotron.php',$image_url,get_the_content(),'size-s',true); ?>
 <div class="white-bg">
     <div id="service-narbar" class="container filter-group filter--service">
         <ul>
@@ -32,53 +40,37 @@
     </div>
 </div>
 <section id="work" class="container-fluid">
-    <?php if(isset($_GET["service"])){ ?>
-    <?php $paragraph = get_field('services_paragraph'); ?>
-    <?php
-    switch ( $_GET["service"] ) {
-    case 'Video':
-    // echo $paragraph[$i]['paragraph'];
-    for ($i=0; $i < sizeof($paragraph); $i++) {
-    if($paragraph[$i]['hashtag'] == "Video"){ ?>
+    <?php// if(isset($_GET["service"])){ ?>
+    
+    <?php for ($i=0; $i < sizeof($paragraph); $i++) { ?>
+    <?php if($paragraph[$i]['hashtag'] == $_GET['service']){ ?>
     <div class="big-paragraph row">
         <?php includePart('templates/molecule-quote-main.php',$paragraph[$i]['paragraph'],'',''); ?>
     </div>
-    <?php 	}
-    }
-    break;
-    case 'Development': ?>
-    <div class="big-paragraph row">
-        <?php includePart('templates/molecule-quote-main.php',$paragraph[$i]['paragraph'],'',''); ?>
-    </div>
-    <?php
-    break;
-    case 'Design':  ?>
-    <div class="big-paragraph row">
-        <?php includePart('templates/molecule-quote-main.php',$paragraph[$i]['paragraph'],'',''); ?>
-    </div>
-    <?php
-    break;
-
-    default: ?>
+   <?php } ?>
   
-    <?php
-    # code...
-    break;
-    }
-    ?>
-    <?php } ?>
+    <?php    } ?>
+     <?php if('All' == $_GET['service']){ ?>
+    <div class="big-paragraph row">
+        <?php includePart('templates/molecule-quote-main.php',get_the_content(),'',''); ?>
+    </div>
+   <?php } ?>
     
     <div class="row">
         <?php
-        // WP_Query arguments
+        $case_study_urls = Array();
+        $work_objs = Array();
+        //Check wether the page is all or a one of the options
         if($_GET["service"] == 'All' OR  isset($_GET["service"]) == false){
         	  $args = array (
 	        	'post_type'  =>  array( 'work' ),
+                'posts_per_page' => -1
 	        );
 	        
 	    } else {
 		  $args = array (
 	        'post_type'  =>  array( 'work' ),
+            'posts_per_page' => -1,
 	        'tax_query' => array(
 	                                array(
 	                                'taxonomy' => 'services',
@@ -90,33 +82,64 @@
 	    }
         // The Query
         $query = new WP_Query( $args );
+        $clientCount = 0;
         // The Loop
-        if ( $query->
-        have_posts() ) {
-        while ( $query->
-        have_posts() ) {
-        $query->
-        the_post();
-        // debug(getFeaturedUrl( get_the_id() ));
-            if(has_post_thumbnail( get_the_id())){
-                includePart('templates/work-obj.php',
-                getFeaturedUrl( get_the_id() ),
-                hex2rgba( get_field('overlay_color') , 0.8),
-                wp_get_post_terms(get_the_id(), 'services', array("fields" =>
-                "all"))[0]->name,
-                $case_study_url,
-                $work_home[$j],
-                wp_get_post_terms(get_the_id(), 'clients', array("fields" =>
-                "all"))[0]->name
-                );
-            }
-         }
-        } else {
-        echo 'no posts found';
-        }
+        if ( $query->have_posts() ) { while ( $query->have_posts() ) { $query->the_post();
+
+                array_push($work_objs,get_post());
+
+
+         } } else { array_push($work_objs,''); }
         // Restore original Post Data
         wp_reset_postdata();
+        for ($i=0; $i < sizeof($work_objs); $i++) { 
+
+            if(has_post_thumbnail($work_objs[$i]->ID)){
+                includePart('templates/work-obj.php',
+                getFeaturedUrl($work_objs[$i]->ID ),
+                hex2rgba( get_field('overlay_color',$work_objs[$i]) , 0.8),
+                wp_get_post_terms($work_objs[$i]->ID, 'services', array("fields" =>
+                "all"))[0]->name,
+                getCaseStudyLink( wp_get_post_terms($work_objs[$i]->ID,'clients', array("fields" =>
+                "all"))[0]->name ),
+                wp_get_post_terms($work_objs[$i]->ID, 'services', array("fields" =>
+                "all"))[0]->name,
+                wp_get_post_terms($work_objs[$i]->ID, 'clients', array("fields" =>
+                "all"))[0]->name
+                );
+            } 
+        }
         ?>
+
+
+
+
+
+
+
+
+<?php 
+
+// if(has_post_thumbnail( get_the_id())){
+//                 includePart('templates/work-obj.php',
+//                 getFeaturedUrl( get_the_id() ),
+//                 hex2rgba( get_field('overlay_color') , 0.8),
+//                 wp_get_post_terms(get_the_id(), 'services', array("fields" =>
+//                 "all"))[0]->name,
+//                 '',
+//                 $work_home[$j],
+//                 wp_get_post_terms(get_the_id(), 'clients', array("fields" =>
+//                 "all"))[0]->name
+//                 );
+//             } 
+
+            ?>
+
+
+
+
+
+
     </div>
 </section>
 <?php endwhile; ?>

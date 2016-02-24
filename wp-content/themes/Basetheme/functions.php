@@ -28,11 +28,14 @@ $sage_includes = [
   'lib/function-truncate-content.php',              // Custom functions
   'lib/function-hex2rgba.php',                      // Custom functions
   'lib/function-display-gravity-form.php',                      // Custom functions
+  'lib/function-getCaseStudyLink.php',                      // Custom functions
+
 
   'post_types/action-post-type-case-study.php',                // Custom Post Type
   'post_types/action-post-type-work.php',               // Custom Post Type
   'post_types/action-post-type-people.php',               // Custom Post Type
   'post_types/register-taxonomies.php',               // Custom Post Type
+
 
 ];
 

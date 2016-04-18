@@ -1,16 +1,16 @@
-@import "common/variables";
+@import "atom/variables";
 
 // Automatically injected Bower dependencies via wiredep (never manually edit this block)
 // bower:scss
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 // endbower
 
-@import "common/global";
-@import "components/buttons";
-@import "components/comments";
-@import "components/forms";
-@import "components/grid";
-@import "components/wp-classes";
+@import "atom/global";
+@import "molecule/buttons";
+@import "molecule/comments";
+@import "molecule/forms";
+@import "molecule/grid";
+@import "molecule/wp-classes";
 @import "template/header";
 @import "template/sidebar";
 @import "template/footer";

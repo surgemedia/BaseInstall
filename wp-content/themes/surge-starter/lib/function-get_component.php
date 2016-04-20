@@ -14,14 +14,14 @@ function get_component($files = Array()){
 			=            Varibles            =
 			================================*/
 			$styleDir = ''; //where is you css dir (optional)
-			$compDir = ''; //where are your comps (optional)
+			$compDir = 'components/'; //where are your comps (optional)
 			$errors = []; //empty error array what be be filled.
+			$return_string = false; //echo by default
 			
 			if(isset($files['vars'])){
 				$vars = $files['vars']; //gets vars
 			}
-			$return_string = false; //echo by default
-			if( isset($files['return_string'])){
+			if(isset($files['return_string'])){
 				$return_string = $files['return_string'];
 			}
 			ob_start(); //start object buffer 
@@ -42,11 +42,10 @@ function get_component($files = Array()){
 			=================================================*/
 			if(isset($files['remove_tags']) && sizeof($files['remove_tags']) > 0){
 				$tags = [];
+
 				for ($i=0; $i < sizeof($files['remove_tags']); $i++) { 
-					array_push($tags, '<'.$files['remove_tags'][$i].'>');
-					array_push($tags, '</'.$files['remove_tags'][$i].'>');
+					$component = strip_tags_content($component,'<'.$files['remove_tags'][$i].'>',TRUE);
 				}
-				$component = str_replace($tags, "", $component);
 			}
 			/*================================================
 			=            Return Comp or Echo Comp            =
@@ -59,4 +58,28 @@ function get_component($files = Array()){
 			unset($files); // unset file array
 			unset($vars); //unset vars so no population
 			}
+
+
+			/*==================================
+			=            Dependency            =
+			==================================*/
+			function strip_tags_content($text, $tags = '', $invert = FALSE) { 
+
+			  preg_match_all('/<(.+?)[\s]*\/?[\s]*>/si', trim($tags), $tags); 
+			  $tags = array_unique($tags[1]); 
+			    
+			  if(is_array($tags) AND count($tags) > 0) { 
+			    if($invert == FALSE) { 
+			      return preg_replace('@<(?!(?:'. implode('|', $tags) .')\b)(\w+)\b.*?>.*?</\1>@si', '', $text); 
+			    } 
+			    else { 
+			      return preg_replace('@<('. implode('|', $tags) .')\b.*?>.*?</\1>@si', '', $text); 
+			    } 
+			  } 
+			  elseif($invert == FALSE) { 
+			    return preg_replace('@<(\w+)\b.*?>.*?</\1>@si', '', $text); 
+			  } 
+			  return $text; 
+			} 
+
 ?>

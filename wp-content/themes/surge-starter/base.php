@@ -7,7 +7,7 @@ use Roots\Sage\Wrapper;
 
 <!doctype html>
 <html <?php language_attributes(); ?>>
-  <?php get_template_part('components/head'); ?>
+  <?php get_template_part('components/template/head'); ?>
   <body <?php body_class(); ?>>
     <!--[if IE]>
       <div class="alert alert-warning">
@@ -16,7 +16,7 @@ use Roots\Sage\Wrapper;
     <![endif]-->
     <?php
       do_action('get_header');
-      get_template_part('components/header');
+      get_template_part('components/template/header');
     ?>
     <div class="wrap container" role="document">
       <div class="content row">
@@ -32,7 +32,7 @@ use Roots\Sage\Wrapper;
     </div><!-- /.wrap -->
     <?php
       do_action('get_footer');
-      get_template_part('components/footer');
+      get_template_part('components/template/footer');
       wp_footer();
     ?>
   </body>

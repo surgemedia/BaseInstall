@@ -27,13 +27,13 @@ if (file_exists(dirname(__FILE__) . '/local-config.php')) {
 
 // Global DB config
 if (!defined('DB_NAME')) {
-	define('DB_NAME', 'brandpro_qO2X23H');
+	define('DB_NAME', 'xxxxxxxx');
 }
 if (!defined('DB_USER')) {
-	define('DB_USER', 'brandpro_tb4EbCD');
+	define('DB_USER', 'xxxxxxxxx');
 }
 if (!defined('DB_PASSWORD')) {
-	define('DB_PASSWORD', '{UY=:vM\9]<"*:E)dnQ;N[=?6$p!s');
+	define('DB_PASSWORD', 'xxxxxxxxxxxx');
 }
 if (!defined('DB_HOST')) {
 	define('DB_HOST', 'localhost');

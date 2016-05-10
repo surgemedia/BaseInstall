@@ -37,15 +37,24 @@ add_filter('excerpt_more', __NAMESPACE__ . '\\excerpt_more');
 =            EXTRA FUCTIONS            =
 ======================================*/
 $custom_includes = [
+  /* Utilitys */
   'lib/aq_resizer.php',    // Scripts and stylesheets
+  'lib/nav-walker.php',    // Scripts and stylesheets
+  'lib/acf-option-page.php', //ACF Option Page
+  'lib/gravity_forms-v5.php',
+
+  /* Post Types */
+  //'lib/post_type_foodstorm.php',   
+  //'lib/post_type_testimonial.php',  
+
+  /* Functions */
   'lib/function-debug.php',    // Scripts and stylesheets
   'lib/function-display-gravity-form.php',    // Scripts and stylesheets
   'lib/function-get_component.php',    // Scripts and stylesheets
   'lib/function-get_id_from_slug.php',    // Scripts and stylesheets
   'lib/function-get-featured-image-url.php',    // Scripts and stylesheets
   'lib/function-truncate-content.php'    // Scripts and stylesheets
-  // 'lib/gravity-forms-v5.php'  
-
+  
 
 ];
 

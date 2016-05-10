@@ -7,9 +7,16 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "bootstrap-sass": "3.3.6"
+    "bootstrap-sass": "3.3.6",
+    "owl.carousel": "^2.0.0-beta.3"
   },
   "overrides": {
+    "owl.carousel": {
+      "main": [
+        "./src/scss/owl.carousel.scss",
+        "./dist/owl.carousel.min.js"
+      ]
+    },
     "bootstrap-sass": {
       "main": [
         "./assets/stylesheets/_bootstrap.scss",

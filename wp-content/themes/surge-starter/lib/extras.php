@@ -43,7 +43,9 @@ $custom_includes = [
   'lib/function-get_component.php',    // Scripts and stylesheets
   'lib/function-get_id_from_slug.php',    // Scripts and stylesheets
   'lib/function-get-featured-image-url.php',    // Scripts and stylesheets
-  'lib/function-truncate-content.php'    // Scripts and stylesheets
+  'lib/function-truncate-content.php',    // Scripts and stylesheets
+  'lib/custom_post_type_class.php',    // Create Custom Post Types
+
   // 'lib/gravity-forms-v5.php'  
 
 

@@ -75,7 +75,7 @@ define( ‘DISALLOW_FILE_EDIT’, true );
  * You can have multiple installations in one database if you give each a unique
  * prefix. Only numbers, letters, and underscores please!
  */
-$table_prefix  = 'PLEASE CHANGE THIS _'; // <-- GENERATE A RANDOM PREFIX
+$table_prefix  = 'headless_'; // <-- GENERATE A RANDOM PREFIX
 /**#@+
 * {@link http://passwordsgenerator.net/ WordPress.org secret-key service}
 */

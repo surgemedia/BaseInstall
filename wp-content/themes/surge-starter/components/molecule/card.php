@@ -5,6 +5,5 @@
 		<h1><?php echo $vars["title"]?></h1>
 	</hgroup>
 	<?php echo apply_filters('the_content',  $vars["content"]); ?>
-	<a class="btn" href="<?php echo $vars['button'][0]['href']; ?>"><?php echo $vars['button'][0]['text']; ?></a>
-	
+	<?php echo $vars['button']; ?>
 </article>

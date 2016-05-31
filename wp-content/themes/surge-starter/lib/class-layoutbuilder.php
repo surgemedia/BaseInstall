@@ -5,6 +5,9 @@ class LayoutBuilder {
 	public $rows;
 	public $elements;
 	public $the_grid;
+	public $template;
+	public $bs_class;
+
 
 
 	 // function getColClass($col) {
@@ -26,23 +29,26 @@ class LayoutBuilder {
 			    	array_push($the_grid, $value);
 			    }
 			}
-
+			$this->rows = $the_grid;
 			foreach($the_grid as $key => $value){
 	 	 		unset($the_grid[$key]['acf_fc_layout']);
 			}
 			//get cols and elements
-			$this->rows = $the_grid;
+			$this->grids = $the_grid;
 
 			
 	 }
 	public function elements($number){
-			$this->elements = $this->rows[$number];
+			$this->elements = $this->grids[$number];
 			return $this->elements;
 
 	}
 	public function bs_class($data){
 			$bs_col = explode('-',$data['acf_fc_layout'],2);
-			$this->bs_class = $bs_col;
+			unset($data['acf_fc_layout']);
+			$this->bs_class = $bs_col[1];
+			$this->template = $bs_col[0];
+
 			return $this->bs_class;
 
 	}

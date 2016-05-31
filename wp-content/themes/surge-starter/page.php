@@ -19,11 +19,15 @@ for ($section_count =0; $section_count  < sizeof($layout_builder); $section_coun
 	/*===========================
 	=            ROW            =
 	===========================*/
-	//debug($section->meta['class']); 
+	
 	?>
-	<?php for ($row_count =0; $row_count  < sizeof($section->rows); $row_count ++) {  ?>
+	<!-- GRID SECTION -->
+	<?php for ($row_count =0; $row_count  < sizeof($section->grids); $row_count ++) {  ?>
 		<div id="row<?php echo $section_count; ?>"  class="<?php echo $section->meta['class']; ?>">
+
 			<?php 
+			if(sizeof($section->elements($row_count)['element']) > 0){
+
 				foreach ($section->elements($row_count) as $key => $value) {
 				/*=========================================
 				=            Bootstrap Columns            =
@@ -31,13 +35,12 @@ for ($section_count =0; $section_count  < sizeof($layout_builder); $section_coun
 					for ($col_i=0; $col_i < sizeof($section->elements($row_count)[$key]); $col_i++) { 
 					$section->bs_class($value[$col_i]);
 					?>
-					<div class="<?php echo $section->bs_class[1] ?>">
+					<div class="<?php echo $section->bs_class ?>">
 					<?php	
-					debug( $value[$col_i]);
 					/*===============================
 					=            Element            =
 					===============================*/
-					get_component([ 'template' => 'molecule/'.$section->bs_class[0],
+					get_component([ 'template' => 'molecule/'.$section->template,
 										'remove_tags' =>  [''],
 														'vars' => $value[$col_i]
 														 ]);
@@ -45,9 +48,27 @@ for ($section_count =0; $section_count  < sizeof($layout_builder); $section_coun
 					</div>
 				<?php	}
 			 ?>
+			 </div>
+			<?php } } else { ?>
+			<?php $section->bs_class($section->rows[$row_count]); ?>
+							<div class="<?php echo $section->bs_class ?>">
+							<?php	
+							
+							//===============================
+							//=            Element            =
+							//===============================
+							get_component([ 'template' => 'organism/'.$section->template,
+												'remove_tags' =>  [''],
+																'vars' => $section->rows[$row_count]
+																 ]);
+																 ?>
+							</div>
+	
 			<?php } ?>
 		</div>
 	<?php } ?>
+
+
 
 </section>
 <?php } ?>

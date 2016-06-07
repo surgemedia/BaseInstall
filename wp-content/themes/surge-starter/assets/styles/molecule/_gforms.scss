@@ -1,0 +1,83 @@
+.gform_wrapper{
+	margin: 0;
+  max-width: 100%;
+	form{
+		.gform_heading{
+			margin-bottom: 0;
+			.gform_title{
+		
+			}
+			.gform_description{
+			
+			}
+		}
+		.gform_body{
+			.gform_fields{
+				.gfield{
+					.gfield_label{
+					
+						.gfield_required{
+						}
+					}
+					.ginput_container{
+						input,select,textarea{
+						
+						}
+						input{
+							
+						}
+						select{
+							
+						}
+						textarea{
+
+						}
+						.chosen-container {
+							
+								width: 100% !important;
+							a.chosen-single {
+								   
+									span {
+										
+									}
+									div {
+									
+										b {
+											//arrow
+											background-image:none !important;
+											&:before{
+											
+											 
+											}
+										}
+									}
+							}
+							.chosen-drop {
+								.chosen-search {
+									input {
+										
+									}
+								}
+								ul.chosen-results {
+									
+									li {
+										
+
+									}
+									li.highlighted {
+										
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		.gform_footer{
+			input[type=submit].gform_button{
+				
+			}
+		}
+	}
+}

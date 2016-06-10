@@ -1,13 +1,7 @@
-<?php //debug($vars); ?>
+
   <div class="owl-carousel slider">
-
   <?php 
-
-
     if($vars['slide_objects'] == 'Website Items') { 
-      //debug($vars['website_items']);
-
-
   $args = array(
           'post__in'      => $vars['website_items'],
           'post_type' => 'any'

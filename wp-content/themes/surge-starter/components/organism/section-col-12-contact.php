@@ -9,7 +9,7 @@
 														"title" => $vars["title"],
 														"subtitle" => $vars["subtitle"],
 														"content" => apply_filters('the_content',  $vars["content"]),
-															"button" => ''
+														"button" => ''
 														]
 											 ]);
 		get_component([ 'template' => 'molecule/form',

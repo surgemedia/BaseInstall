@@ -1,4 +1,4 @@
-<section class="container-fluid">
+<section class="container-fluid padding-6">
 <?php
 	$element_file = $vars['element'][0]['acf_fc_layout']; //get file
 	unset($vars['element'][0]['acf_fc_layout']); // remove file from array leveling only vars

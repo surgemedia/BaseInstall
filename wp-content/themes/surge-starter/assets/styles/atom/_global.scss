@@ -57,9 +57,14 @@ h2,.h2 { font-size:6em;   }
     }
 
 
-.row {
+.padding-6 {
 	padding-top:4em;
 	padding-bottom:4em;  
-	border-top:1px dashed #d1d1d1;
-	display:block;
+}
+.bg-cover {
+	background-size:cover;
+}
+section {
+	    border-top: 1px solid #FF00B1;
+    border-bottom: 1px solid #FF00B1;
 }

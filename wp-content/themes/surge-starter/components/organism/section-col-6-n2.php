@@ -1,8 +1,9 @@
-<section class="container-fluid">
+<section class="container padding-6">
 <?php
 	/*=====================================
 	=            Get Files            =
 	=====================================*/
+	//debug($vars);
 	$element_file_l = $vars['element-1'][0]['acf_fc_layout']; //get file
 	$element_file_r = $vars['element-2'][0]['acf_fc_layout']; //get file
 	unset($vars['element-1'][0]['acf_fc_layout']); // remove file from array leveling only vars
@@ -23,12 +24,12 @@
 	//Element L
 	get_component([
 	 'template' => 'molecule/'.$element_file_l,
-	 'vars' => $element_vars
+	 'vars' => $element_vars_l
 			]);
 	//Element R
 	get_component([
 	 'template' => 'molecule/'.$element_file_r,
-	 'vars' => $element_vars
+	 'vars' => $element_vars_r
 			]);
 	unset($element_file_l);
 	unset($element_file_r);

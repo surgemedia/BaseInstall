@@ -1,24 +1,24 @@
-<section class="container-fluid">
+<section class="container-fluid padding-6">
 <?php
 	/*=====================================
 	=            Get Files            =
 	=====================================*/
-	$element_file_l = $vars['element-l'][0]['acf_fc_layout']; //get file
-	$element_file_r = $vars['element-r'][0]['acf_fc_layout']; //get file
-	unset($vars['element-l'][0]['acf_fc_layout']); // remove file from array leveling only vars
-	unset($vars['element-r'][0]['acf_fc_layout']); // remove file from array leveling only vars
+	$element_file_l = $vars['element-1'][0]['acf_fc_layout']; //get file
+	$element_file_r = $vars['element-2'][0]['acf_fc_layout']; //get file
+	unset($vars['element-1'][0]['acf_fc_layout']); // remove file from array leveling only vars
+	unset($vars['element-2'][0]['acf_fc_layout']); // remove file from array leveling only vars
 
 	/*=====================================
 	=            Setup Classes            =
 	=====================================*/
-	$vars['element-l'][0]['class'] = 'col-md-6'; //because i know this from the file name
-	$vars['element-r'][0]['class'] = 'col-md-6'; //because i know this from the file name
+	$vars['element-1'][0]['class'] = 'col-md-4'; //because i know this from the file name
+	$vars['element-2'][0]['class'] = 'col-md-8'; //because i know this from the file name
 
 	/*==================================
 	=            Setup Vars            =
 	==================================*/
-	$element_vars_l = $vars['element-l'][0];
-	$element_vars_r = $vars['element-r'][0];
+	$element_vars_l = $vars['element-1'][0];
+	$element_vars_r = $vars['element-2'][0];
 
 	//Element L
 	get_component([

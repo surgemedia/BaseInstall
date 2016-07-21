@@ -1,4 +1,13 @@
-<?php while (have_posts()) : the_post(); ?>
-  <?php get_template_part('components/molecule/page', 'header'); ?>
-  <?php get_template_part('components/molecule/content', 'page'); ?>
-<?php endwhile; ?>
+<?php
+$layout_builder = get_field('layout');
+foreach ($layout_builder as $key => $value) {
+	$section_file = $value['acf_fc_layout'];
+	unset($value['acf_fc_layout']); //of section
+
+			get_component([
+						'template' => 'organism/'.$section_file,
+						'vars' => $value
+			]);
+	unset($section_file);
+}
+?>

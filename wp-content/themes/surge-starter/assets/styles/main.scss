@@ -3,11 +3,13 @@
 // Automatically injected Bower dependencies via wiredep (never manually edit this block)
 // bower:scss
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+@import "../../bower_components/owl.carousel/src/scss/owl.carousel.scss";
 // endbower
 
 /*============================
 =            Atom            =
 ============================*/
+@import "atom/fonts";
 @import "atom/global";
 
 /*================================
@@ -23,7 +25,7 @@
 /*================================
 =            Organism            =
 ================================*/
-
+@import "organism/paragraph-overlay";
 
 /*=================================
 =            Templates            =

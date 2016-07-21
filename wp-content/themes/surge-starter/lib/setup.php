@@ -86,6 +86,10 @@ function display_sidebar() {
     is_404(),
     is_front_page(),
     is_page_template('template-home.php'),
+    is_page(),
+    is_single(),
+
+
   ]);
 
   return apply_filters('sage/display_sidebar', $display);

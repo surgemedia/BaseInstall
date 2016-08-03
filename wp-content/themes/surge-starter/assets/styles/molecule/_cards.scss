@@ -1,0 +1,86 @@
+.card{
+	display:inline-block;
+	float:none;
+	text-align:center;	
+	img{
+
+	}
+	hgroup{
+		h6{
+
+		}
+		h1{
+
+		}
+	}
+	p{
+		
+		img{
+			@extend .img-responsive;
+		}
+	}
+	.button-list{
+
+	}
+
+	.btn{
+		@include button($blue,#fff,#fff,$blue);
+		@extend .h5;
+		min-width:180px;
+		height: 40px;
+		margin-top: 2em;
+	}
+
+  &.default{
+  	img{
+
+		}
+		hgroup{
+			h6{
+
+			}
+			h1{
+
+			}
+		}
+		p{
+			font-size: 1.6em;
+		}
+		.button-list{
+
+		}
+  }
+	&.style-1{
+		
+    padding: 4em 5em;
+    text-align: center;
+    position: relative;
+		.wrapper{
+			img{
+				width: auto;
+		    height: 96px;
+		    display: inline;
+			}
+			hgroup{
+				
+				h6{
+					@extend .h3;
+				}
+				h1{
+					@extend .h4;
+				}
+			}
+			p{
+
+			}
+		}
+	}
+
+	&.style-2{}
+
+	&.style-3{}
+	
+	&.style-4{}
+	
+	&.style-5{}
+}
